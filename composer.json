@@ -1,0 +1,21 @@
+{
+  "name": "concrete5/console",
+  "description": "Concrete console utility.",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "symfony/console": "^4.1",
+    "symfony/process": "^5.2"
+  },
+  "bin": [
+    "bin/concrete"
+  ],
+  "autoload": {
+    "psr-4": {
+      "Concrete\\Console\\": "src/"
+    },
+    "files": [
+      "helpers.php"
+    ]
+  }
+}
