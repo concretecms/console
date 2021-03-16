@@ -6,7 +6,7 @@ A command line utility for working with Concrete CMS.
 
 The Concrete console is most effectively installed using Composer.
 
-    compose require concrete5/console
+    composer require concrete5/console
     
 You can do this from within a composer-installed Concrete site, and the console utility will be immediately available. Just run
 
@@ -18,7 +18,7 @@ From within your project's composer root.
 
 You should also be able to install this globally with composer. 
    
-    compose global require concrete5/console
+    composer global require concrete5/console
     export PATH=~/.composer/vendor/bin:$PATH
     
 ## Running Commands
@@ -53,7 +53,7 @@ Returns
 
 ## Roadmap
 
-The most importanat items we want to currently focus on are:
+The most important items we want to currently focus on are:
 
 * Add the ability to dump sites, configurations, files and more into a standardized backup archive.
 * Add the ability to _restore_ a Concrete site from one of these standardized backup archives, by passing a file to a given `vendor/bin/concrete restore my_backup.gz` command.
