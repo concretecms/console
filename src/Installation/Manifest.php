@@ -27,6 +27,7 @@ use Concrete\Core\Package\ItemCategory\StorageLocationType;
  */
 class Manifest implements \JsonSerializable
 {
+    public const DATE_FORMAT = DATE_ISO8601;
 
     /** @psalm-var PackageType[] */
     protected $packages = [];
@@ -139,7 +140,7 @@ class Manifest implements \JsonSerializable
     public function jsonSerialize()
     {
         return [
-            'created' => $this->getDateCreated() ? $this->getDateCreated()->format(DATE_RFC3339_EXTENDED) : null,
+            'created' => $this->getDateCreated() ? $this->getDateCreated()->format(self::DATE_FORMAT) : null,
             'site' => $this->getSiteName(),
             'url' => $this->getUrl(),
             'path' => $this->getPath(),
@@ -164,7 +165,7 @@ class Manifest implements \JsonSerializable
     public static function jsonDeserialize(array $data): Manifest
     {
         $createdDate = dot_get($data, 'created');
-        $createdDateTime = $createdDate ? \DateTimeImmutable::createFromFormat(DATE_RFC3339_EXTENDED, $createdDate) : null;
+        $createdDateTime = $createdDate ? \DateTimeImmutable::createFromFormat(self::DATE_FORMAT, $createdDate) : null;
 
         $self = new Manifest();
         $self->created = $createdDateTime ?: null;

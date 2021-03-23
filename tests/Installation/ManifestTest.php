@@ -14,7 +14,7 @@ class ManifestTest extends TestCase
         $manifest = (new Manifest())
 
             // Set all values from complete.json
-            ->setDateCreated(\DateTime::createFromFormat(DATE_RFC3339_EXTENDED, '2021-03-03T03:03:03.003-03:00'))
+            ->setDateCreated(\DateTime::createFromFormat(Manifest::DATE_FORMAT, '2021-03-10T20:40:50+0000'))
             ->setSiteName('concrete5 Site')
             ->setUrl('https://some.url')
             ->setInstallationPath('/home/foo/concrete5')
