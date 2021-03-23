@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Concrete\Console\Installation;
-
 
 use Concrete\Console\TestCase;
 
@@ -23,7 +21,7 @@ class ManifestTest extends TestCase
             ->setDatabase('db.sql')
             ->setIncludeCore(true)
             ->setIncludeIndex(true)
-        
+
             // Add application stuff
             ->addApplicationItems([
                 'views',
@@ -78,5 +76,4 @@ class ManifestTest extends TestCase
         yield ['complete.json'];
         yield ['opposite.json'];
     }
-
 }

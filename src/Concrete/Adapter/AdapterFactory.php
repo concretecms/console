@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Concrete\Console\Concrete\Adapter;
-
 
 use Composer\Semver\Comparator;
 use Concrete\Console\Exception\Installation\VersionMismatch;
@@ -34,5 +32,4 @@ class AdapterFactory implements ContainerAwareInterface
 
         throw VersionMismatch::expected('< 10.0.0', $version);
     }
-
 }

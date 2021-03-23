@@ -1,21 +1,20 @@
 <?php
-namespace Concrete\Console\Concrete\Connection;
 
+namespace Concrete\Console\Concrete\Connection;
 
 trait ConnectionAwareTrait
 {
 
     /** @var ConnectionInterface */
-    protected $__connection;
+    protected $traitConnection;
 
     public function setConnection(ConnectionInterface $connection): void
     {
-        $this->__connection = $connection;
+        $this->traitConnection = $connection;
     }
 
     protected function getConnection(): ?ConnectionInterface
     {
-        return $this->__connection;
+        return $this->traitConnection;
     }
-
 }

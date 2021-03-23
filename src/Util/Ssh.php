@@ -50,8 +50,10 @@ final class Ssh
         $this->user = $user;
         $this->host = $host;
         $this->port = $port;
-        $this->processConfigurationClosure = function(Process $process): void {};
-        $this->onOutput = function(string $type, string $line): void {};
+        $this->processConfigurationClosure = function (Process $process): void {
+        };
+        $this->onOutput = function (string $type, string $line): void {
+        };
     }
 
     /**
@@ -165,9 +167,9 @@ final class Ssh
         $delimiter = 'EOF-SPATIE-SSH';
         $target = $this->getTarget();
 
-        return "{$this->sshExecutable} {$extraOptions} {$target} 'bash -se' << \\$delimiter".PHP_EOL
-            .$commandString.PHP_EOL
-            .$delimiter;
+        return "{$this->sshExecutable} {$extraOptions} {$target} 'bash -se' << \\$delimiter" . PHP_EOL
+            . $commandString . PHP_EOL
+            . $delimiter;
     }
 
     /**
@@ -227,7 +229,7 @@ final class Ssh
     {
         $extraOptions = $this->getExtraOptions();
 
-        if (! is_null($this->port)) {
+        if (!is_null($this->port)) {
             $extraOptions[] = "-p {$this->port}";
         }
 
@@ -243,7 +245,7 @@ final class Ssh
 
         $extraOptions[] = '-r';
 
-        if (! is_null($this->port)) {
+        if (!is_null($this->port)) {
             $extraOptions[] = "-P {$this->port}";
         }
 
@@ -261,12 +263,12 @@ final class Ssh
             $extraOptions[] = "-i {$this->pathToPrivateKey}";
         }
 
-        if (! $this->enableStrictHostChecking) {
+        if (!$this->enableStrictHostChecking) {
             $extraOptions[] = '-o StrictHostKeyChecking=no';
             $extraOptions[] = '-o UserKnownHostsFile=/dev/null';
         }
 
-        if (! $this->enablePasswordAuthentication) {
+        if (!$this->enablePasswordAuthentication) {
             $extraOptions[] = '-o PasswordAuthentication=no';
         }
 
@@ -283,7 +285,7 @@ final class Ssh
      */
     protected function wrapArray($arrayOrString): array
     {
-        return (array) $arrayOrString;
+        return (array)$arrayOrString;
     }
 
     public function run(string $command, string $method = 'run'): Process

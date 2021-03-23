@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Concrete\Console\Exception\Backup;
-
 
 class BackupNotFound extends \InvalidArgumentException
 {
@@ -11,5 +9,4 @@ class BackupNotFound extends \InvalidArgumentException
     {
         return new BackupNotFound('No backup found at path: ' . $path, 404);
     }
-
 }

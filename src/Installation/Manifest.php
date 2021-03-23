@@ -1,4 +1,5 @@
 <?php
+
 namespace Concrete\Console\Installation;
 
 use Concrete\Core\Package\ItemCategory\StorageLocationType;
@@ -391,7 +392,7 @@ class Manifest implements \JsonSerializable
         if ($created instanceof \DateTime) {
             $created = \DateTimeImmutable::createFromMutable($created);
         } elseif (!$created instanceof \DateTimeImmutable) {
-            Throw new \RuntimeException('Unknown datetime type provided.');
+            throw new \RuntimeException('Unknown datetime type provided.');
         }
 
         $self = clone $this;

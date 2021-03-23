@@ -8,7 +8,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * @beforeClass
      */
-    public static function concreteSetup()
+    public static function concreteSetup(): void
     {
         // Declare c5 execute
         if (!defined('C5_EXECUTE')) {
@@ -19,9 +19,8 @@ class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * @after
      */
-    public function mockeryTearDown()
+    public function mockeryTearDown(): void
     {
         \Mockery::close();
     }
-
 }

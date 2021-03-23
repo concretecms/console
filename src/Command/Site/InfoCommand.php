@@ -1,9 +1,9 @@
 <?php
+
 namespace Concrete\Console\Command\Site;
 
 use Concrete\Console\Application;
 use Concrete\Console\Command\Command;
-use Concrete\Console\Concrete\Connection\ApplicationEnabledConnection;
 use Concrete\Core\System\Info;
 use League\Container\Container;
 

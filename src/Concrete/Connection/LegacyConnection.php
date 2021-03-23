@@ -1,4 +1,5 @@
 <?php
+
 namespace Concrete\Console\Concrete\Connection;
 
 class LegacyConnection implements ConnectionInterface

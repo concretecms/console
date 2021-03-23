@@ -1,4 +1,5 @@
 <?php
+
 namespace Concrete\Console\Concrete\Restore\Strategy;
 
 use Concrete\Console\Concrete\Connection\ApplicationEnabledConnectionInterface;
@@ -22,7 +23,6 @@ use Throwable;
  */
 class RestoreDatabase extends AbstractOutputtingStrategy implements ConnectionAwareInterface
 {
-
     use ConnectionAwareTrait;
 
     public function restore(Restoration $job): bool
@@ -61,7 +61,13 @@ class RestoreDatabase extends AbstractOutputtingStrategy implements ConnectionAw
             }
 
             if ($sql->exec("drop table `{$table}`") === false) {
-                throw new RuntimeException('Unable to delete database table "' . $table . '" ' . implode(', ', $sql->errorInfo()));
+                throw new RuntimeException(
+                    sprintf(
+                        'Unable to delete database table "%s" %s',
+                        $table,
+                        implode(', ', $sql->errorInfo())
+                    )
+                );
             }
         }
         $sql->exec('set FOREIGN_KEY_CHECKS=1');
@@ -74,24 +80,32 @@ class RestoreDatabase extends AbstractOutputtingStrategy implements ConnectionAw
         $output->outputStep('Restoring');
 
         $input = fopen($tempDir . '/' . $database, 'r+');
-        $process = process([
-            'mysql',
-            '-u' . dot_get($connection, 'username', ''),
-            '-p' . dot_get($connection, 'password', ''),
-            '-h' . dot_get($connection, 'server', ''),
-            dot_get($connection, 'database', ''),
-        ], null, null, $input, 0);
+        $process = process(
+            [
+                'mysql',
+                '-u' . dot_get($connection, 'username', ''),
+                '-p' . dot_get($connection, 'password', ''),
+                '-h' . dot_get($connection, 'server', ''),
+                dot_get($connection, 'database', ''),
+            ],
+            null,
+            null,
+            $input,
+            0
+        );
 
         if ($job->isDryRun()) {
             $output->outputDryrun();
             $output->outputFinal();
             return true;
         } else {
-            $process->start(function(string $channel, string $message): void {
-                if ($channel === 'err') {
-                    throw new RuntimeException('Failed to restore database: ' . $message);
+            $process->start(
+                function (string $channel, string $message): void {
+                    if ($channel === 'err') {
+                        throw new RuntimeException('Failed to restore database: ' . $message);
+                    }
                 }
-            });
+            );
 
             while ($process->isRunning()) {
                 sleep(1);
@@ -109,21 +123,23 @@ class RestoreDatabase extends AbstractOutputtingStrategy implements ConnectionAw
      */
     private function getDatabaseCredentials(Restoration $job): array
     {
-        $extractConfigCredentials = function(array $config): array {
+        $extractConfigCredentials = function (array $config): array {
             $default = dot_get($config, 'default-connection');
             if ($default && $defaultConnection = dot_get($config, 'connections.' . $default)) {
                 return [
-                    'server' => (string) dot_get($defaultConnection, 'server', ''),
-                    'database' => (string) dot_get($defaultConnection, 'database', ''),
-                    'username' => (string) dot_get($defaultConnection, 'username', ''),
-                    'password' => (string) dot_get($defaultConnection, 'password', ''),
-                    'charset' => (string) dot_get($defaultConnection, 'character_set', ''),
-                    'collation' => (string) dot_get($defaultConnection, 'collation', ''),
-                    'cert' => (string) dot_get($defaultConnection, 'database', ''),
+                    'server' => (string)dot_get($defaultConnection, 'server', ''),
+                    'database' => (string)dot_get($defaultConnection, 'database', ''),
+                    'username' => (string)dot_get($defaultConnection, 'username', ''),
+                    'password' => (string)dot_get($defaultConnection, 'password', ''),
+                    'charset' => (string)dot_get($defaultConnection, 'character_set', ''),
+                    'collation' => (string)dot_get($defaultConnection, 'collation', ''),
+                    'cert' => (string)dot_get($defaultConnection, 'database', ''),
                 ];
             }
 
-            throw new \InvalidArgumentException('Invalid configuration provided. Couldn\'t resolve default connection.');
+            throw new \InvalidArgumentException(
+                'Invalid configuration provided. Couldn\'t resolve default connection.'
+            );
         };
 
         // First try loading directly using the connection if there is one
@@ -144,12 +160,15 @@ class RestoreDatabase extends AbstractOutputtingStrategy implements ConnectionAw
             $paths = $job->findConcretePath('concrete/bin/concrete5');
             $cliPath = array_shift($paths);
             if ($cliPath) {
-                $process = process([
-                    $cliPath,
-                    'c5:config',
-                    'get',
-                    'database'
-                ], $job->getInstallation()->getPath());
+                $process = process(
+                    [
+                        $cliPath,
+                        'c5:config',
+                        'get',
+                        'database'
+                    ],
+                    $job->getInstallation()->getPath()
+                );
                 $process->mustRun();
 
                 $result = json_decode($process->getOutput(), true);
@@ -187,7 +206,8 @@ class RestoreDatabase extends AbstractOutputtingStrategy implements ConnectionAw
             $sql = new PDO(
                 'mysql:host=' . $connection['server'] . ';dbname=' . $connection['database'],
                 $connection['username'],
-                $connection['password']);
+                $connection['password']
+            );
 
             $result = $sql->query('SHOW VARIABLES LIKE "%version%"');
             if ($result->fetchAll()) {

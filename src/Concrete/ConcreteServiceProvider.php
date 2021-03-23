@@ -1,6 +1,6 @@
 <?php
-namespace Concrete\Console\Concrete;
 
+namespace Concrete\Console\Concrete;
 
 use Concrete\Console\Concrete\Adapter\AdapterFactory;
 use Concrete\Console\Concrete\Connection\ConnectionAwareInterface;
@@ -24,14 +24,15 @@ class ConcreteServiceProvider extends AbstractServiceProvider implements Bootabl
     {
         $app = $this->getLeagueContainer();
 
-        $app->add(ClientInterface::class, function(): ClientInterface {
+        $app->add(ClientInterface::class, function (): ClientInterface {
             $installation = $this->getContainer()->get(Installation::class);
-            $adapter = $this->getContainer()->get(AdapterFactory::class)->forVersion($installation->getVersion()->getVersion());
+            $adapter = $this->getContainer()->get(AdapterFactory::class)
+                ->forVersion($installation->getVersion()->getVersion());
 
             return new Client($adapter);
         });
 
-        $app->add(ConnectionInterface::class, function(): ConnectionInterface {
+        $app->add(ConnectionInterface::class, function (): ConnectionInterface {
             $client = $this->getContainer()->get(ClientInterface::class);
             $installation = $this->getContainer()->get(Installation::class);
 

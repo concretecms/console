@@ -8,8 +8,8 @@ use Concrete\Console\Concrete\InstanceConfig;
 use Concrete\Console\Util\Config;
 use Concrete\Console\Util\Platform;
 use League\Container\Container;
+use RuntimeException;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\BufferedOutput;
 
 class SyncCommand extends Command
 {
@@ -19,7 +19,7 @@ class SyncCommand extends Command
         $file = Config::findFile('concrete.json', $this->getInstallation());
 
         if (!$file) {
-            throw new \RuntimeException('Unable to locate concrete.json config file.');
+            throw new RuntimeException('Unable to locate concrete.json config file.');
         }
 
         $data = json_decode(file_get_contents($file), true);
@@ -28,7 +28,7 @@ class SyncCommand extends Command
         $fromInstance = dot_get($instances, $from);
 
         if (!$fromInstance || !$fromInstance instanceof InstanceConfig) {
-            throw new \RuntimeException('No instances found.');
+            throw new RuntimeException('No instances found.');
         }
 
         $this->output->outputStep('Backing up remote site');
@@ -54,9 +54,12 @@ class SyncCommand extends Command
     public static function register(Container $container, Application $console): void
     {
         $console->command('site:sync from [--config=]', self::class)
-            ->descriptions('Sync a remote site into this site using backups.', [
-                'from' => 'The location to sync from @remote:/path/to/backup.tar.gz or @remote',
-                '--config' => 'Specify the config file to use',
-            ]);
+            ->descriptions(
+                'Sync a remote site into this site using backups.',
+                [
+                    'from' => 'The location to sync from @remote:/path/to/backup.tar.gz or @remote',
+                    '--config' => 'Specify the config file to use',
+                ]
+            );
     }
 }

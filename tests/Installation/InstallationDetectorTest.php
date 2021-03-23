@@ -1,4 +1,5 @@
 <?php
+
 namespace Concrete\Console\Installation;
 
 use Concrete\Console\TestCase;

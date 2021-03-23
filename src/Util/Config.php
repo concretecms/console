@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Concrete\Console\Util;
-
 
 use Concrete\Console\Installation\Installation;
 
@@ -38,5 +36,4 @@ class Config
 
         return 'MAINTENANCE MODE';
     }
-
 }

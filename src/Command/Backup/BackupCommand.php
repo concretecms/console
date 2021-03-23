@@ -29,7 +29,7 @@ class BackupCommand extends Command
 
     public function __invoke(?string $filename, InputInterface $input)
     {
-        $this->skipCore = (bool) $input->getOption('skip-core');
+        $this->skipCore = (bool)$input->getOption('skip-core');
 
         // Make a new directory to back up in
         $backupDirectory = Platform::tempDirectory(true);
@@ -48,7 +48,7 @@ class BackupCommand extends Command
             ->setVersion($this->getInstallation()->getVersion()->getVersion())
             ->setInstallationPath($this->getInstallation()->getPath())
             ->setSiteName($site->getSiteName())
-            ->setUrl((string) $site->getSiteCanonicalURL());
+            ->setUrl((string)$site->getSiteCanonicalURL());
 
         $e = null;
         try {
@@ -88,7 +88,12 @@ class BackupCommand extends Command
      */
     public static function register(Container $container, Application $console): void
     {
-        $console->command('backup:backup [filename] [--skip-core] [--temp] [--dir=]', self::class, ['backup'])
+        $console
+            ->command(
+                'backup:backup [filename] [--skip-core] [--temp] [--dir=]',
+                self::class,
+                ['backup']
+            )
             ->descriptions(
                 'Generate a Concrete installation backup',
                 [
@@ -97,9 +102,11 @@ class BackupCommand extends Command
                     '--temp' => 'Store relative to the concrete temp folder',
                     '--dir' => 'The directory to store the backup in'
                 ]
-            )->defaults([
-                'dir' => Platform::configDirectory() . '/backups'
-            ]);
+            )->defaults(
+                [
+                    'dir' => Platform::configDirectory() . '/backups'
+                ]
+            );
     }
 
     protected function exportDatabase(Manifest $manifest, string $directory): Manifest
@@ -176,7 +183,8 @@ class BackupCommand extends Command
             } else {
                 $this->output->writeln(
                     sprintf(
-                        "** <error>Alert! File storage location '%s' is not an instance of local configuration. It will not be included in this backup.</error>",
+                        "** <error>Alert! File storage location '%s' is not an instance of local configuration." .
+                        "It will not be included in this backup.</error>",
                         $storageLocation->getName()
                     )
                 );
@@ -245,7 +253,11 @@ class BackupCommand extends Command
 
         foreach ($packages->getAvailablePackages() as $package) {
             $handle = $package->getPackageHandle();
-            $manifest = $manifest->addPackage($handle, in_array($handle, $installed), file_exists($package->getPackagePath()));
+            $manifest = $manifest->addPackage(
+                $handle,
+                in_array($handle, $installed),
+                file_exists($package->getPackagePath())
+            );
         }
 
         // Make sure we have installed missing packages as well

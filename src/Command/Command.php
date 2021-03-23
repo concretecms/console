@@ -11,21 +11,24 @@ use Concrete\Console\Installation\InstallationAwareInterface;
 use Concrete\Console\Installation\InstallationAwareTrait;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
-use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 
-abstract class Command implements ContainerAwareInterface, OutputStyleAwareInterface, ConsoleAwareInterface,
-                                  CommandGroupInterface, ConnectionAwareInterface, InstallationAwareInterface
+abstract class Command implements
+    ContainerAwareInterface,
+    OutputStyleAwareInterface,
+    ConsoleAwareInterface,
+    CommandGroupInterface,
+    ConnectionAwareInterface,
+    InstallationAwareInterface
 {
+    use ContainerAwareTrait;
+    use ConnectionAwareTrait;
+    use InstallationAwareTrait;
 
     /** @var OutputStyle */
     protected $output;
 
     /** @var Application */
     protected $console;
-
-    use ContainerAwareTrait;
-    use ConnectionAwareTrait;
-    use InstallationAwareTrait;
 
     /**
      * @param OutputStyle $outputStyle
@@ -55,5 +58,4 @@ abstract class Command implements ContainerAwareInterface, OutputStyleAwareInter
 
         return $connection->getApplication();
     }
-
 }

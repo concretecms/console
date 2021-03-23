@@ -1,4 +1,5 @@
 <?php
+
 namespace Concrete\Console\Installation;
 
 use Symfony\Component\Console\Command\Command;
@@ -8,5 +9,4 @@ interface InstallationAwareInterface
 {
 
     public function setInstallation(Installation $installation): void;
-
 }

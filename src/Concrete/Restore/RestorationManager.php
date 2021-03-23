@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Concrete\Console\Concrete\Restore;
-
 
 use Concrete\Console\Command\OutputStyle;
 use Concrete\Console\Command\OutputStyleAwareInterface;
@@ -32,7 +30,9 @@ class RestorationManager implements StrategyInterface, OutputStyleAwareInterface
         $succeeded = 0;
         foreach ($this->strategies as $strategyArray) {
             [$strategy, $skip] = $strategyArray;
-            $this->outputStyle->write(' Starting <fg=green;options=bold>' . snake_case(class_basename($strategy), ' ') . '</> step...');
+            $this->outputStyle->write(
+                ' Starting <fg=green;options=bold>' . snake_case(class_basename($strategy), ' ') . '</> step...'
+            );
 
             if (!$skip) {
                 if ($strategy->restore($job)) {
