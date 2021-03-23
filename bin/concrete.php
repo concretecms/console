@@ -12,7 +12,13 @@ use Symfony\Component\Console\Input\Input;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Concrete\Console\Exception;
 
-require __DIR__ . '/../vendor/autoload.php';
+if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
+    require_once __DIR__ . '/../vendor/autoload.php';
+} elseif (file_exists(__DIR__ . '/../../autoload.php')) {
+    require_once __DIR__ . '/../../autoload.php';
+} else {
+    require_once __DIR__ . '/../../../autoload.php';
+}
 
 // Declare c5 execute
 if (!defined('C5_EXECUTE')) {
