@@ -16,6 +16,7 @@ jobs:
           configuration: phpunit.xml.dist
           args: --coverage-text
           php_version: 7.1
+          version: 7.5.20
 
   build-latest:
     runs-on: ubuntu-latest
