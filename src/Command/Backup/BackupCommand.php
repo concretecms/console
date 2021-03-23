@@ -66,7 +66,7 @@ class BackupCommand extends Command
             // Rethrow any errors
             throw $e;
         } finally {
-            $this->writeln('Removing temporary directory...');
+            $this->output->writeln('Removing temporary directory...');
 
             $rmProcess = new Process(
                 [
@@ -79,7 +79,7 @@ class BackupCommand extends Command
             $rmProcess->run();
         }
 
-        $this->success('Backup complete!');
+        $this->output->success('Backup complete!');
         return 0;
     }
 
@@ -136,7 +136,7 @@ class BackupCommand extends Command
         foreach ($storageLocations as $storageLocation) {
             $configuration = $storageLocation->getConfigurationObject();
             if ($configuration instanceof LocalConfiguration) {
-                $this->writeln(
+                $this->output->writeln(
                     sprintf(
                         "Adding files from storage location: '%s' (%s)",
                         $storageLocation->getName(),
@@ -174,7 +174,7 @@ class BackupCommand extends Command
                     true
                 );
             } else {
-                $this->writeln(
+                $this->output->writeln(
                     sprintf(
                         "** <error>Alert! File storage location '%s' is not an instance of local configuration. It will not be included in this backup.</error>",
                         $storageLocation->getName()
@@ -193,7 +193,7 @@ class BackupCommand extends Command
 
     protected function exportApplication(Manifest $manifest, string $directory): Manifest
     {
-        $this->writeln('Exporting application/ directory...');
+        $this->output->writeln('Exporting application/ directory...');
         $rsyncProcess = new Process(
             [
                 'rsync',
@@ -238,7 +238,7 @@ class BackupCommand extends Command
 
     protected function exportPackages(Manifest $manifest, string $directory): Manifest
     {
-        $this->writeln('Exporting packages/ directory...');
+        $this->output->writeln('Exporting packages/ directory...');
         /** @var PackageService $packages */
         $packages = $this->getApplication()->make(PackageService::class);
         $installed = $packages->getInstalledHandles();
@@ -279,7 +279,7 @@ class BackupCommand extends Command
     protected function exportCore(Manifest $manifest, string $directory): Manifest
     {
         if (!$this->skipCore) {
-            $this->writeln('Exporting concrete/ directory...');
+            $this->output->writeln('Exporting concrete/ directory...');
             $rsyncProcess = new Process(
                 [
                     'rsync',
@@ -312,13 +312,13 @@ class BackupCommand extends Command
             $outputFile = sprintf('backup_%s_%s', snake_case($siteName), $date->format('Y-m-d-H-i-s'));
         }
 
-        $this->writeln(sprintf('Compressing directory: %s', $outputFile));
+        $this->output->writeln(sprintf('Compressing directory: %s', $outputFile));
 
         $compressed = new PharData($outputDirectory . '/' . $outputFile . '.tar.gz', null, null, Phar::GZ);
         $compressed->buildFromDirectory($directory);
 
-        $this->writeln(['<fg=green>', 'Successfully created backup file at:<fg=cyan>']);
-        $this->writeln($compressed->getPath(), self::VERBOSITY_QUIET);
-        $this->writeln('</>');
+        $this->output->writeln(['<fg=green>', 'Successfully created backup file at:<fg=cyan>']);
+        $this->output->writeln($compressed->getPath(), self::VERBOSITY_QUIET);
+        $this->output->writeln('</>');
     }
 }

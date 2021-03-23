@@ -45,7 +45,7 @@ class SyncCommand extends Command
         $this->output->outputDone();
 
         $this->output->outputStep('Restoring');
-        $result = $this->console->runCommand("backup:restore '{$syncPath}' --no-interaction", $this);
+        $result = $this->console->runCommand("backup:restore '{$syncPath}' --no-interaction", $this->output);
         $this->output->outputDone();
 
         return $result;

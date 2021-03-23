@@ -37,30 +37,30 @@ class DumpCommand extends Command
                 );
 
                 $outputFile = $file;
-                $this->writeln(sprintf('Exporting database: %s', $connectionRow['database']));
+                $this->output->writeln(sprintf('Exporting database: %s', $connectionRow['database']));
 
-                $process = new Process($mysqldump);
+                $process = process($mysqldump);
                 $process->setTimeout(null);
                 $process->run();
                 if ($process->isSuccessful()) {
                     if ($input->getOption('gz')) {
                         $outputFile = $file . '.gz';
-                        $this->writeln('Compressing file with gzip...');
-                        $process = new Process(['gzip', $file]);
+                        $this->output->writeln('Compressing file with gzip...');
+                        $process = process(['gzip', $file]);
                         $process->setTimeout(null);
                         $process->run();
                     }
 
-                    $this->writeln(sprintf('Database backed up to file: %s', $outputFile));
+                    $this->output->writeln(sprintf('Database backed up to file: %s', $outputFile));
                 } else {
-                    $this->writeln('<error>' . $process->getErrorOutput() . '</error>');
+                    $this->output->writeln('<error>' . $process->getErrorOutput() . '</error>');
                 }
 
                 return 0;
             }
         }
 
-        $this->writeln('<error>Unable to locate default Concrete database connection.</error>');
+        $this->output->writeln('<error>Unable to locate default Concrete database connection.</error>');
         return 1;
     }
 

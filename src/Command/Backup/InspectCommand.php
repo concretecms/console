@@ -15,14 +15,14 @@ class InspectCommand extends Command
     public function __invoke(string $backupFile, InputInterface $input, ManifestFactory $factory): int
     {
         if (!file_exists($backupFile)) {
-            $this->error('Backup file not found.');
+            $this->output->error('Backup file not found.');
             return 111;
         }
 
         $manifest = $factory->forBackup($backupFile);
 
         if (!$manifest) {
-            $this->error('Unable to load manifest from backup file.');
+            $this->output->error('Unable to load manifest from backup file.');
             return 112;
         }
 
@@ -32,7 +32,7 @@ class InspectCommand extends Command
         }
 
         if ($input->getOption('manifest-only')) {
-            $this->writeln(json_encode($manifest, JSON_PRETTY_PRINT));
+            $this->output->writeln(json_encode($manifest, JSON_PRETTY_PRINT));
             return 0;
         }
         $testAdjective = function(string $affirmative, string $negative): callable {
@@ -44,7 +44,7 @@ class InspectCommand extends Command
         $included = $testAdjective('Included', 'Excluded');
         $installed = $testAdjective('Installed', 'Not Installed');
 
-        $this->table(['basics'], [
+        $this->output->table(['basics'], [
             ['Version', $manifest->getVersion()],
             ['Core', $included($manifest->includesCore())],
             ['Index', $included($manifest->includesIndex())],
@@ -58,7 +58,7 @@ class InspectCommand extends Command
                 $included(!!dot_get($package, 'included'))
             ];
         }
-        $this->table(['Packages'], $packages);
+        $this->output->table(['Packages'], $packages);
 
         $locations = [];
         foreach ($manifest->getStorageLocations() as $location) {
@@ -74,7 +74,7 @@ class InspectCommand extends Command
         $keys = ['<th>Storage Locations</th>', '<th>ID</th>', '<th>File count</th>', 'Is Included', 'Is Default'];
         $locations = array_map(function($columns) use ($keys) { return array_combine($keys, $columns); }, $locations);
 
-        $this->table(['Storage Locations', 'ID', 'File Count'], $locations);
+        $this->output->table(['Storage Locations', 'ID', 'File Count'], $locations);
         return 0;
     }
 
@@ -108,7 +108,7 @@ class InspectCommand extends Command
 
         if ($path) {
             if (!$backup->offsetExists($path)) {
-                $this->error('Cannot access "' . $path . '": No such file or directory');
+                $this->output->error('Cannot access "' . $path . '": No such file or directory');
                 return 1;
             }
 
@@ -135,7 +135,7 @@ class InspectCommand extends Command
             }
         }
 
-        $this->table($headers, $table);
+        $this->output->table($headers, $table);
         return 0;
     }
 }

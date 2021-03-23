@@ -15,11 +15,11 @@ class InfoCommand extends Command
         $app = $this->getApplication();
 
         $info = $app->make(Info::class);
-        $this->writeln('<info># Location</info>');
-        $this->writeln(sprintf('Path to installation: %s', DIR_BASE));
-        $this->writeln('<info># concrete5 Version</info>');
-        $this->writeln('Installed - ' . ($info->isInstalled() ? 'Yes' : 'No'));
-        $this->writeln($info->getCoreVersions());
+        $this->output->writeln('<info># Location</info>');
+        $this->output->writeln(sprintf('Path to installation: %s', DIR_BASE));
+        $this->output->writeln('<info># concrete5 Version</info>');
+        $this->output->writeln('Installed - ' . ($info->isInstalled() ? 'Yes' : 'No'));
+        $this->output->writeln($info->getCoreVersions());
     }
 
     /**

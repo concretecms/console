@@ -25,7 +25,7 @@ class RestoreCommand extends Command
         $installation = $this->getInstallation();
         $manifest = $factory->forBackup($backupFile);
 
-        if (!$this->confirm('Are you sure you want to restore this backup?')) {
+        if (!$this->output->confirm('Are you sure you want to restore this backup?')) {
             return 1;
         }
 
@@ -63,8 +63,8 @@ class RestoreCommand extends Command
         try {
             $restore->resolve()->restore($job);
         } finally {
-            $this->newLine();
-            $this->writeln('Cleaning up...');
+            $this->output->newLine();
+            $this->output->writeln('Cleaning up...');
             $finalize = new Finalize();
             $finalize->clean($job);
         }
