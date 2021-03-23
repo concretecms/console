@@ -45,15 +45,6 @@ class Application extends SillyApplication
         $this->useContainer($container, true, true);
     }
 
-    public function run(InputInterface $input = null, OutputInterface $output = null)
-    {
-        if (!$output) {
-            $output = new Output();
-        }
-
-        return parent::run($input, $output);
-    }
-
     public function doRun(InputInterface $input, OutputInterface $output)
     {
         $this->input = $input;
@@ -71,7 +62,6 @@ class Application extends SillyApplication
         $this->getContainer()->add(InputInterface::class, $input);
         $this->getContainer()->add(OutputInterface::class, $output);
         $this->getContainer()->add(ConsoleOutputInterface::class, $output);
-        $this->getContainer()->add(Output::class, $output);
         $this->getContainer()->add(OutputStyle::class, $this->style);
         $this->getContainer()->inflector(OutputStyleAwareInterface::class)
             ->invokeMethod('setOutputStyle', [OutputStyle::class]);

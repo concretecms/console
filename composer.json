@@ -39,8 +39,7 @@
   "require-dev": {
     "ext-simplexml": "*",
     "nunomaduro/collision": "^3|^4|^5",
-    "vimeo/psalm": "^4.6",
-    "phpunit/phpunit": "^7.5",
+    "phpunit/phpunit": "^7|^8|^9",
     "mockery/mockery": "^1.3"
   }
 }
