@@ -1,16 +1,63 @@
 <?php
 
+use Concrete\Console\Application;
+use Concrete\Console\Concrete\ConcreteServiceProvider;
+use Concrete\Console\Installation\InstallationServiceProvider;
+use League\Container\Container;
+use League\Container\ReflectionContainer;
+use NunoMaduro\Collision\Provider as Collision;
+use Concrete\Console\Command;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Input\Input;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Concrete\Console\Exception;
+
 require __DIR__ . '/../vendor/autoload.php';
 
-use Concrete\Console\Application;
+// Declare c5 execute
+if (!defined('C5_EXECUTE')) {
+    define('C5_EXECUTE', 'concrete5/console');
+}
 
-$application = new Application();
-$application->addCommands(
-    [
-        new \Concrete\Console\Command\InfoCommand(),
-        new \Concrete\Console\Command\Backup\BackupCommand(),
-        new \Concrete\Console\Command\Database\DumpCommand(),
+// Setup debug stuff if available
+if (class_exists(Collision::class)) (new Collision)->register();
 
-    ]
-);
-$application->run();
+// Set up DI container
+$container = new Container();
+$container->delegate(new ReflectionContainer());
+$container->addServiceProvider(ConcreteServiceProvider::class);
+$container->addServiceProvider(InstallationServiceProvider::class);
+
+// Set up an inflector for the container itself
+$container->inflector(\League\Container\ContainerAwareInterface::class)
+    ->invokeMethod('setContainer', [$container]);
+
+// Setup console application
+$application = new Application($container);
+
+// Set up an inflector for the console
+$container->inflector(Command\ConsoleAwareInterface::class)
+    ->invokeMethod('setConsole', [$application]);
+
+// Run
+try {
+    // Add commands
+    $application->run();
+} catch(Exception\Installation\InstallationNotFound $e) {
+    $output = $application->getOutputStyle();
+
+    if ($output->isVeryVerbose()) {
+        throw $e;
+    }
+    $output->error($e->getMessage());
+    die($e->getCode());
+} catch (\Throwable $e) {
+    $output = $application->getOutputStyle();
+
+    if ($output->isVeryVerbose()) {
+        throw $e;
+    }
+
+    $output->error($e->getMessage());
+    die($e->getCode());
+}
