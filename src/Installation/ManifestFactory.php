@@ -35,5 +35,4 @@ class ManifestFactory
         // @TODO Implement this factory method
         return new Manifest();
     }
-
 }

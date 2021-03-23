@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Concrete\Console\Concrete\Adapter;
 
 use Concrete\Console\Concrete\Connection\ApplicationEnabledConnectionInterface;

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Concrete\Console\Installation;
@@ -51,11 +52,15 @@ class Version
      *
      * @psalm-pure
      */
-    public static function normalizeVersionString(string $version, int $segments = 5, bool $validate = true, bool $keepNoun = true): string
-    {
+    public static function normalizeVersionString(
+        string $version,
+        int $segments = 5,
+        bool $validate = true,
+        bool $keepNoun = true
+    ): string {
         $version = explode('.', trim($version));
         $finalSegment = array_pop($version);
-        $withoutNoun = (string) intval($finalSegment);
+        $withoutNoun = (string)intval($finalSegment);
         $noun = substr($finalSegment, strlen($withoutNoun));
         $version[] = $withoutNoun;
 
@@ -164,4 +169,3 @@ class Version
         return Comparator::notEqualTo($this->versionString, self::normalizeVersionString($version));
     }
 }
-

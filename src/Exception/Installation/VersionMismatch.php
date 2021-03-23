@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Concrete\Console\Exception\Installation;
-
 
 class VersionMismatch extends \InvalidArgumentException
 {
@@ -11,5 +9,4 @@ class VersionMismatch extends \InvalidArgumentException
     {
         return new self("Expected {$expected}, got {$got}");
     }
-
 }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Concrete\Console\Installation\Detector;
-
 
 class Version6DetectorTest extends AbstractVersionDetectorTest
 {
@@ -18,5 +16,4 @@ class Version6DetectorTest extends AbstractVersionDetectorTest
             ['tests/fixtures/adapter/v8'],
         ]
     ];
-
 }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Concrete\Console\Concrete\Restore;
-
 
 use Concrete\Console\Installation\Installation;
 use Concrete\Console\Installation\Manifest;
@@ -29,8 +27,13 @@ class Restoration
     /** @var bool */
     protected $isDryRun;
 
-    public static function forBackup(PharData $backup, Manifest $manifest, Installation $install, string $temp, bool $dryrun): Restoration
-    {
+    public static function forBackup(
+        PharData $backup,
+        Manifest $manifest,
+        Installation $install,
+        string $temp,
+        bool $dryrun
+    ): Restoration {
         $self = new Restoration();
         $self->backup = $backup;
         $self->manifest = $manifest;
@@ -105,11 +108,16 @@ class Restoration
         ];
 
         foreach ($check as $expectedPath) {
-            $fullPath = implode('/', array_filter([
-                $path,
-                $expectedPath,
-                $subpath
-            ]));
+            $fullPath = implode(
+                '/',
+                array_filter(
+                    [
+                        $path,
+                        $expectedPath,
+                        $subpath
+                    ]
+                )
+            );
 
             if (file_exists($fullPath)) {
                 $results[] = $fullPath;

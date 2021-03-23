@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Concrete\Console\Concrete;
-
 
 use Concrete\Console\Util\Ssh;
 use Symfony\Component\Process\Process;
@@ -95,5 +93,4 @@ class InstanceConfig
 
         return $result;
     }
-
 }

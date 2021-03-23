@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Concrete\Console\Concrete\Connection;
-
 
 interface ConnectionInterface
 {

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Concrete\Console\Exception\Backup;
-
 
 class InvalidManifest extends \InvalidArgumentException
 {
@@ -11,5 +9,4 @@ class InvalidManifest extends \InvalidArgumentException
     {
         return new BackupNotFound('Invalid manifest found in backup at path: ' . $path, 400);
     }
-
 }

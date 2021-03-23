@@ -10,23 +10,34 @@ namespace Concrete\Console\Installation;
 class Validator
 {
 
-    const DIRNAME_CONCRETE = 'concrete';
-    const FILENAME_DISPATCHER = 'dispatcher.php';
+    public const DIRNAME_CONCRETE = 'concrete';
+    public const FILENAME_DISPATCHER = 'dispatcher.php';
 
     public function isValid(Installation $installation): bool
     {
         if (!is_dir($installation->getPath())) {
-            throw new \RuntimeException(sprintf('Unable to locate installation directory: %s', $installation->getPath()));
+            throw new \RuntimeException(
+                sprintf(
+                    'Unable to locate installation directory: %s',
+                    $installation->getPath()
+                )
+            );
         }
 
-        if (!file_exists(
-            $installation->getPath() . DIRECTORY_SEPARATOR . self::DIRNAME_CONCRETE . DIRECTORY_SEPARATOR .
-                self::FILENAME_DISPATCHER)) {
-            throw new \RuntimeException(sprintf('Installation directory %s does not appear to be a valid Concrete installation', $installation->getPath()));
+        $path = implode(
+            DIRECTORY_SEPARATOR,
+            [$installation->getPath(), self::DIRNAME_CONCRETE, self::FILENAME_DISPATCHER]
+        );
+
+        if (!file_exists($path)) {
+            throw new \RuntimeException(
+                sprintf(
+                    'Installation directory %s does not appear to be a valid Concrete installation',
+                    $installation->getPath()
+                )
+            );
         }
 
         return true;
     }
-
-
 }

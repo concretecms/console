@@ -22,7 +22,7 @@ class InstallationServiceProvider extends AbstractServiceProvider implements Boo
 
     public function register()
     {
-        $this->getLeagueContainer()->add(Installation::class, function(): ?Installation {
+        $this->getLeagueContainer()->add(Installation::class, function (): ?Installation {
             $factory = $this->getContainer()->get(InstallationDetector::class);
             $input = $this->getContainer()->get(InputInterface::class)->getOption('instance');
             if (!is_string($input)) {

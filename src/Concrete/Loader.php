@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Concrete\Console\Concrete;
 
 /**

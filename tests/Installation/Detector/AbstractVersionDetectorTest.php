@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Concrete\Console\Installation\Detector;
-
 
 use Concrete\Console\Installation\Version;
 use Concrete\Console\TestCase;
@@ -28,7 +26,11 @@ abstract class AbstractVersionDetectorTest extends TestCase
         $version = $detector->versionAtPath($path);
 
         $this->assertNotNull($version, 'Expected version not matched at path ' . $path);
-        $this->assertEquals(Version::normalizeVersionString($expected), $version->getVersion(), 'Invalid version matched for path.');
+        $this->assertEquals(
+            Version::normalizeVersionString($expected),
+            $version->getVersion(),
+            'Invalid version matched for path.'
+        );
     }
 
     /**
@@ -43,17 +45,22 @@ abstract class AbstractVersionDetectorTest extends TestCase
     public function validPaths()
     {
         $base = realpath(__DIR__ . '/../../../');
-        return array_map(function($path) use ($base) {
-            return [$base . '/' . ltrim($path[0], '/'), $path[1]];
-        }, $this->paths['valid']);
+        return array_map(
+            function ($path) use ($base) {
+                return [$base . '/' . ltrim($path[0], '/'), $path[1]];
+            },
+            $this->paths['valid']
+        );
     }
 
     public function invalidPaths()
     {
         $base = realpath(__DIR__ . '/../../../');
-        return array_map(function($path) use ($base) {
-            return [$base . $path[0]];
-        }, $this->paths['invalid']);
+        return array_map(
+            function ($path) use ($base) {
+                return [$base . $path[0]];
+            },
+            $this->paths['invalid']
+        );
     }
-
 }

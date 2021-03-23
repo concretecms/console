@@ -1,15 +1,12 @@
 <?php
 
-
 namespace Concrete\Console\Concrete\Restore;
-
 
 use League\Container\ContainerAwareInterface as ContainerAwareInterfaceAlias;
 use League\Container\ContainerAwareTrait;
 
 class RestorationManagerBuilder implements ContainerAwareInterfaceAlias
 {
-
     use ContainerAwareTrait;
 
     protected $manager;

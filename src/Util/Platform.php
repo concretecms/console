@@ -1,5 +1,12 @@
 <?php
+
 namespace Concrete\Console\Util;
+
+use RuntimeException;
+
+use function defined;
+use function function_exists;
+use function strlen;
 
 /**
  * Platform helper for uniform platform-specific tests.
@@ -11,7 +18,7 @@ class Platform
     /**
      * Parses tildes and environment variables in paths.
      *
-     * @param  string $path
+     * @param string $path
      * @return string
      */
     public static function expandPath(string $path): string
@@ -20,19 +27,23 @@ class Platform
             return self::getUserDirectory() . substr($path, 1);
         }
 
-        return preg_replace_callback('#^(\$|(?P<percent>%))(?P<var>\w++)(?(percent)%)(?P<path>.*)#', function (array $matches) {
-            // Treat HOME as an alias for USERPROFILE on Windows for legacy reasons
-            if (Platform::isWindows() && $matches['var'] == 'HOME') {
-                return (getenv('HOME') ?: getenv('USERPROFILE')) . $matches['path'];
-            }
+        return preg_replace_callback(
+            '#^(\$|(?P<percent>%))(?P<var>\w++)(?(percent)%)(?P<path>.*)#',
+            function (array $matches) {
+                // Treat HOME as an alias for USERPROFILE on Windows for legacy reasons
+                if (Platform::isWindows() && $matches['var'] == 'HOME') {
+                    return (getenv('HOME') ?: getenv('USERPROFILE')) . $matches['path'];
+                }
 
-            return getenv($matches['var']) . $matches['path'];
-        }, $path);
+                return getenv($matches['var']) . $matches['path'];
+            },
+            $path
+        );
     }
 
     /**
-     * @throws \RuntimeException If the user home could not reliably be determined
      * @return string            The formal user home as detected from environment parameters
+     * @throws RuntimeException If the user home could not reliably be determined
      */
     public static function getUserDirectory(): string
     {
@@ -44,13 +55,13 @@ class Platform
             return $home;
         }
 
-        if (\function_exists('posix_getuid') && \function_exists('posix_getpwuid')) {
+        if (function_exists('posix_getuid') && function_exists('posix_getpwuid')) {
             $info = posix_getpwuid(posix_getuid());
 
             return $info['dir'];
         }
 
-        throw new \RuntimeException('Could not determine user directory');
+        throw new RuntimeException('Could not determine user directory');
     }
 
     public static function configDirectory(): string
@@ -88,25 +99,25 @@ class Platform
      */
     public static function isWindows()
     {
-        return \defined('PHP_WINDOWS_VERSION_BUILD');
+        return defined('PHP_WINDOWS_VERSION_BUILD');
     }
 
     /**
-     * @param  string $str
+     * @param string $str
      * @return int    return a guaranteed binary length of the string, regardless of silly mbstring configs
      */
     public static function strlen(string $str): int
     {
         static $useMbString = null;
         if (null === $useMbString) {
-            $useMbString = \function_exists('mb_strlen') && ini_get('mbstring.func_overload');
+            $useMbString = function_exists('mb_strlen') && ini_get('mbstring.func_overload');
         }
 
         if ($useMbString) {
             return mb_strlen($str, '8bit');
         }
 
-        return \strlen($str);
+        return strlen($str);
     }
 
     /**

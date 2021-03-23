@@ -1,4 +1,5 @@
 <?php
+
 namespace Concrete\Console\Concrete\Connection;
 
 use Concrete\Core\Application\Application;

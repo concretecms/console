@@ -1,4 +1,5 @@
 <?php
+
 namespace Concrete\Console\Command;
 
 use Concrete\Console\Application;

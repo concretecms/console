@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Concrete\Console\Exception\Installation;
-
 
 class InstallationNotFound extends \InvalidArgumentException
 {
@@ -11,5 +9,4 @@ class InstallationNotFound extends \InvalidArgumentException
     {
         return new self("Unable to find concrete version at path: {$path}'", 404);
     }
-
 }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Concrete\Console\Installation\Detector;
-
 
 use Concrete\Console\Installation\DatabaseCredentials;
 use Concrete\Console\Installation\Version;

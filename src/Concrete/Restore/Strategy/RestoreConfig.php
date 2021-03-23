@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Concrete\Console\Concrete\Restore\Strategy;
-
 
 use Concrete\Console\Concrete\Restore\Restoration;
 use Concrete\Console\Concrete\Restore\StrategyInterface;

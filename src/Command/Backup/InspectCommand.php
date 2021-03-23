@@ -1,4 +1,5 @@
 <?php
+
 namespace Concrete\Console\Command\Backup;
 
 use Concrete\Console\Application;
@@ -35,8 +36,8 @@ class InspectCommand extends Command
             $this->output->writeln(json_encode($manifest, JSON_PRETTY_PRINT));
             return 0;
         }
-        $testAdjective = function(string $affirmative, string $negative): callable {
-            return function(bool $test) use ($affirmative, $negative): string {
+        $testAdjective = function (string $affirmative, string $negative): callable {
+            return function (bool $test) use ($affirmative, $negative): string {
                 return $test ? '<fg=cyan>' . $affirmative . '</>' : '<fg=red>' . $negative . '</>';
             };
         };
@@ -72,7 +73,9 @@ class InspectCommand extends Command
         }
 
         $keys = ['<th>Storage Locations</th>', '<th>ID</th>', '<th>File count</th>', 'Is Included', 'Is Default'];
-        $locations = array_map(function($columns) use ($keys) { return array_combine($keys, $columns); }, $locations);
+        $locations = array_map(function ($columns) use ($keys) {
+            return array_combine($keys, $columns);
+        }, $locations);
 
         $this->output->table(['Storage Locations', 'ID', 'File Count'], $locations);
         return 0;

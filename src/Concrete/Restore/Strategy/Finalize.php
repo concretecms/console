@@ -35,7 +35,12 @@ class Finalize extends AbstractOutputtingStrategy
         $install = $job->getInstallation();
         $installPath = $install->getPath();
         $basePath = $job->tempDir('indexes');
-        $allFiles = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($basePath, \RecursiveDirectoryIterator::SKIP_DOTS));
+        $allFiles = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator(
+                $basePath,
+                \RecursiveDirectoryIterator::SKIP_DOTS
+            )
+        );
         $dry = $job->isDryRun();
 
         /** @var \SplFileInfo $file */
@@ -83,7 +88,7 @@ class Finalize extends AbstractOutputtingStrategy
         $command->mustRun();
 
         if ($command->isSuccessful()) {
-            $output->outputDone();;
+            $output->outputDone();
             return true;
         }
 
@@ -105,12 +110,11 @@ class Finalize extends AbstractOutputtingStrategy
         $command->mustRun();
 
         if ($command->isSuccessful()) {
-            $output->outputDone();;
+            $output->outputDone();
             return true;
         }
 
         $output->outputDone('Failed', '<fg=red>');
         return false;
     }
-
 }

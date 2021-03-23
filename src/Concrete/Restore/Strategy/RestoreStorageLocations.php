@@ -1,4 +1,5 @@
 <?php
+
 namespace Concrete\Console\Concrete\Restore\Strategy;
 
 use Concrete\Console\Concrete\Connection\ApplicationEnabledConnectionInterface;
@@ -14,7 +15,6 @@ use League\Flysystem\MountManager;
 
 class RestoreStorageLocations extends AbstractOutputtingStrategy implements ContainerAwareInterface
 {
-
     use ContainerAwareTrait;
 
     public function restore(Restoration $job): bool

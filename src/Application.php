@@ -111,5 +111,4 @@ class Application extends SillyApplication
     {
         return $this->style;
     }
-
 }

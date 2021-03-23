@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Concrete\Console\Command;
 
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -28,5 +27,4 @@ class OutputStyle extends SymfonyStyle
     {
         $this->outputStep('', '', '  -');
     }
-
 }

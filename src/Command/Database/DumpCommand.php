@@ -1,4 +1,5 @@
 <?php
+
 namespace Concrete\Console\Command\Database;
 
 use Concrete\Console\Application;
@@ -18,7 +19,7 @@ class DumpCommand extends Command
         $config = $app->make('config')->get('database');
         $connection = $config['default-connection'];
 
-        foreach($config['connections'] as $identifier => $connectionRow) {
+        foreach ($config['connections'] as $identifier => $connectionRow) {
             if ($identifier == $connection) {
                 if (!$file) {
                     $date = new \DateTime();

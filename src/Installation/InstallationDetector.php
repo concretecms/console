@@ -33,7 +33,8 @@ class InstallationDetector
     protected function normalizePath(string $path): ?string
     {
         if (!$path) {
-            // Obtain the current working directory (have to do it this way because when of symlinks with local composer)
+            // Obtain the current working directory
+            // (have to do it this way because when of symlinks with local composer)
             $path = dirname(getcwd() . DIRECTORY_SEPARATOR . $_SERVER['PHP_SELF']);
 
             // Load autoload relative to this location
@@ -62,5 +63,4 @@ class InstallationDetector
 
         return new Installation($path, $version);
     }
-
 }
