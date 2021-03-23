@@ -1,0 +1,80 @@
+{
+  "created": "2021-03-10T20:40:50+0000",
+  "site": "concrete5 Site",
+  "url": "https://some.url",
+  "path": "\/home\/foo\/concrete5",
+  "host": "foo.local",
+  "version": "1.0",
+  "contents": {
+    "application": true,
+    "applicationContents": [
+      "attributes",
+      "authentication",
+      "blocks",
+      "bootstrap",
+      "config",
+      "controllers",
+      "elements",
+      "jobs",
+      "languages",
+      "mail",
+      "page_templates",
+      "single_pages",
+      "src",
+      "themes",
+      "tools",
+      "views"
+    ],
+    "core": true,
+    "database": "db.sql",
+    "index": true,
+    "packages": [
+      {
+        "handle": "foo",
+        "included": true,
+        "installed": true
+      },
+      {
+        "handle": "baz",
+        "included": true,
+        "installed": false
+      },
+      {
+        "handle": "zab",
+        "included": false,
+        "installed": true
+      },
+      {
+        "handle": "bar",
+        "included": false,
+        "installed": false
+      }
+    ],
+    "storageLocations": [
+      {
+        "id": 1,
+        "name": "red",
+        "default": true,
+        "included": true
+      },
+      {
+        "id": 2,
+        "name": "blue",
+        "default": true,
+        "included": false
+      },
+      {
+        "id": 3,
+        "name": "green",
+        "default": false,
+        "included": true
+      },
+      {
+        "id": 4,
+        "name": "yellow",
+        "default": false,
+        "included": false
+      }
+    ]
+  }
+}

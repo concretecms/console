@@ -1,0 +1,58 @@
+{
+  "created": "2020-02-10T20:40:50+0000",
+  "site": "",
+  "url": "",
+  "path": "",
+  "host": "",
+  "version": "",
+  "contents": {
+    "database": "",
+    "storageLocations": [
+      {
+        "id": 1,
+        "name": "red",
+        "default": false,
+        "included": false
+      },
+      {
+        "id": 2,
+        "name": "blue",
+        "default": false,
+        "included": true
+      },
+      {
+        "id": 3,
+        "name": "green",
+        "default": true,
+        "included": false
+      },
+      {
+        "id": 4,
+        "name": "yellow",
+        "default": true,
+        "included": true
+      }
+    ],
+    "application": false,
+    "applicationContents": [],
+    "packages": [
+      {
+        "handle": "foo",
+        "installed": false,
+        "included": false
+      },
+      {
+        "handle": "baz",
+        "installed": true,
+        "included": false
+      },
+      {
+        "handle": "bar",
+        "installed": true,
+        "included": true
+      }
+    ],
+    "core": false,
+    "index": false
+  }
+}

@@ -1,39 +1,25 @@
 <?php
+
 namespace Concrete\Console\Command\Database;
 
-use Concrete\Console\Command\AbstractInstallationCommand;
+use Concrete\Console\Application;
+use Concrete\Console\Command\Command;
+use League\Container\Container;
+use Symfony\Component\Console\Input\Input;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
-use Concrete\Core\Support\Facade\Facade;
 use Symfony\Component\Process\Process;
 
-class DumpCommand extends AbstractInstallationCommand
+class DumpCommand extends Command
 {
 
-    protected function configure()
+    public function __invoke(string $file, Input $input)
     {
-        $this
-            ->setName('database:dump')
-            ->setDescription('Dumps the Concrete database to a file.')
-            ->addArgument('file', InputArgument::OPTIONAL, 'Filename for the dump file.')
-            ->addOption(
-                'gz',
-                null,
-                InputOption::VALUE_NONE,
-                'Gzip the export'
-            );
-    }
-
-    public function execute(InputInterface $input, OutputInterface $output)
-    {
-        $file = $input->getArgument('file');
-        $app = Facade::getFacadeApplication();
+        $app = $this->getApplication();
         $config = $app->make('config')->get('database');
         $connection = $config['default-connection'];
 
-        foreach($config['connections'] as $identifier => $connectionRow) {
+        foreach ($config['connections'] as $identifier => $connectionRow) {
             if ($identifier == $connection) {
                 if (!$file) {
                     $date = new \DateTime();
@@ -44,7 +30,7 @@ class DumpCommand extends AbstractInstallationCommand
                 $mysqldump = sprintf(
                     "mysqldump --host='%s' --port='%s' --user='%s' --password='%s' '%s' > '%s'",
                     $connectionRow['server'],
-                    3306,
+                    isset($connectionRow['port']) ? $connectionRow['port'] : 3306,
                     $connectionRow['username'],
                     $connectionRow['password'],
                     $connectionRow['database'],
@@ -52,32 +38,39 @@ class DumpCommand extends AbstractInstallationCommand
                 );
 
                 $outputFile = $file;
-                $output->writeln(sprintf('Exporting database: %s', $connectionRow['database']));
+                $this->output->writeln(sprintf('Exporting database: %s', $connectionRow['database']));
 
-                $process = Process::fromShellCommandline($mysqldump);
+                $process = process($mysqldump);
                 $process->setTimeout(null);
                 $process->run();
                 if ($process->isSuccessful()) {
                     if ($input->getOption('gz')) {
                         $outputFile = $file . '.gz';
-                        $output->writeln('Compressing file with gzip...');
-                        $process = Process::fromShellCommandline(sprintf("gzip '%s'", $file));
+                        $this->output->writeln('Compressing file with gzip...');
+                        $process = process(['gzip', $file]);
                         $process->setTimeout(null);
                         $process->run();
                     }
 
-                    $output->writeln(sprintf('Database backed up to file: %s', $outputFile));
+                    $this->output->writeln(sprintf('Database backed up to file: %s', $outputFile));
                 } else {
-                    $output->writeln('<error>' . $process->getErrorOutput() . '</error>');
+                    $this->output->writeln('<error>' . $process->getErrorOutput() . '</error>');
                 }
 
                 return 0;
             }
         }
 
-        $output->writeln('<error>Unable to locate default Concrete database connection.</error>');
+        $this->output->writeln('<error>Unable to locate default Concrete database connection.</error>');
         return 1;
     }
 
-
+    public static function register(Container $container, Application $console): void
+    {
+        $console->command('database:dump [file] [-z|--gz]', self::class)
+            ->descriptions('Dumps the Concrete database to a file', [
+                'file' => 'Filename for the dump file',
+                '--gz' => 'Flag to gzip',
+            ]);
+    }
 }

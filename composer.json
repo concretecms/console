@@ -4,12 +4,22 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "symfony/console": "^4.1",
-    "symfony/process": "^5.2"
+    "php": "^7.1|^8.0",
+    "ext-json": "*",
+    "ext-pdo": "*",
+    "symfony/process": "^3|^4|^5",
+    "league/container": "^3.3",
+    "mnapoli/silly": "^1.7",
+    "composer/semver": "^3.2",
+    "league/climate": "^3.5",
+    "league/flysystem": "^1.0"
   },
   "bin": [
     "bin/concrete"
   ],
+  "conflict": {
+    "concrete5/core": "*"
+  },
   "autoload": {
     "psr-4": {
       "Concrete\\Console\\": "src/"
@@ -17,5 +27,20 @@
     "files": [
       "helpers.php"
     ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Concrete\\Console\\": "tests/"
+    },
+    "files": [
+      "helpers.php"
+    ]
+  },
+  "require-dev": {
+    "ext-simplexml": "*",
+    "nunomaduro/collision": "^3|^4|^5",
+    "phpunit/phpunit": "^7|^8|^9",
+    "mockery/mockery": "^1.3",
+    "squizlabs/php_codesniffer": "^3.5"
   }
 }

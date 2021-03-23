@@ -1,0 +1,6 @@
+<?php
+
+/**
+ * @method make(...$args): mixed
+ */
+class Application {}

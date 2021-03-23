@@ -1,0 +1,20 @@
+
+<cyan>     ncreteconcreteconcreteconcreteconcre
+   concreteconcreteconcreteconcreteconcrete
+ <blue>|</blue> concreteconcr--econc  teconcreteconcrete
+ <blue>|</blue> concreteconc   econ   tecon.reteconcrete
+ <blue>|</blue> concreteconc.  econ   teco  :eteconcrete
+ <blue>|</blue> concre- .oncr   con   tec.  reteconcrete
+ <blue>|</blue> concret  :ncr   con.  tec  'reteconcrete
+ <blue>|</blue> concret:  ncr:  conc .te.  creteconcrete
+ <blue>|</blue> concrete. :cret conc ete  ncreteconcrete
+ <blue>|</blue> concreteco  re:.       .:oncreteconcrete
+ <blue>|</blue> concretecon      . . .   .ncre..concrete
+ <blue>|</blue> concreteco     .concreteconc.   .oncrete
+ <blue>|</blue> concretec      econcreteco.    econcrete
+ <blue>|</blue> concretec:     :concrete.    :teconcrete
+ <blue>|</blue> concreteco:      .ncr.     :reteconcrete
+ <blue>|</blue> concreteconcr:.         .oncreteconcrete
+ <blue>|</blue> concreteconcreteconcreteconcreteconcrete
+  <blue>\ </blue>oncreteconcreteconcreteconcreteconcre
+    <blue>----------------------------------</blue></cyan>

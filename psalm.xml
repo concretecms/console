@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="2"
+    resolveFromConfigFile="true"
+    phpVersion="7.1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+>
+    <stubs>
+        <file name=".psalm/stubs/Composer/Semver/Comparator.php.stub"/>
+        <file name=".psalm/stubs/Concrete/Core/Application.php.stub"/>
+    </stubs>
+    <projectFiles>
+        <directory name="src" />
+        <ignoreFiles>
+            <directory name="vendor" />
+        </ignoreFiles>
+    </projectFiles>
+    <issueHandlers>
+        <UndefinedClass errorLevel="suppress" />
+        <UndefinedConstant errorLevel="suppress" />
+        <TypeDoesNotContainType errorLevel="suppress" />
+        <MissingConstructor errorLevel="suppress" />
+        <PropertyNotSetInConstructor errorLevel="suppress" />
+        <UnresolvableInclude errorLevel="suppress" />
+    </issueHandlers>
+    <plugins>
+        <plugin filename=".psalm/plugins/PsrContainerChecker.php"/>
+    </plugins>
+</psalm>
