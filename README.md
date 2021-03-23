@@ -3,29 +3,20 @@
 A command line utility for working with Concrete CMS.
 
 ## Installation
-
-The Concrete console is most effectively installed using Composer.
-
-    composer require concrete5/console
-    
-You can do this from within a composer-installed Concrete site, and the console utility will be immediately available. Just run
-
-    vendor/bin/concrete
-    
-From within your project's composer root.
-
 ### Global Installation
+The concrete console cli tool is meant to be installed globally with composer
 
-You should also be able to install this globally with composer. 
-   
     composer global require concrete5/console
-    export PATH=~/.composer/vendor/bin:$PATH
     
+If you haven't already, make sure to add the global composer bin directory to your PATH.
+
+    export PATH=~/.composer/vendor/bin:$PATH
+
 ## Running Commands
 
-If you've installed the console utility in your project, you can run commands just like this
+You can run commands just like this
 
-    vendor/bin/concrete info
+    concrete info
     
 Which should get you something like:
 
@@ -39,7 +30,7 @@ Which should get you something like:
     
 If you want to run a command against a different site, or if you've installed the console utility globally, any command that operates against a particular Concrete installation also has an `--installation` option (or `-i` for short.)
 
-    /path/to/my/global/console/concrete info --installation=/path/to/my/site
+    concrete info --installation=/path/to/my/site
     
 Returns
 
@@ -55,10 +46,17 @@ Returns
 
 The most important items we want to currently focus on are:
 
-* Add the ability to dump sites, configurations, files and more into a standardized backup archive.
-* Add the ability to _restore_ a Concrete site from one of these standardized backup archives, by passing a file to a given `vendor/bin/concrete restore my_backup.gz` command.
+* ~~Add the ability to dump sites, configurations, files and more into a standardized backup archive.~~
+* ~~Add the ability to _restore_ a Concrete site from one of these standardized backup archives, by passing a file to a given `concrete restore my_backup.gz` command.~~
+* Improved stability of backup and restore
+* Restore into an uninstalled concrete5
+* Backing up a version 6 site
 
 After that, we'd be happy to add as many features as you'd like. Should this tool include the ability to create boilerplate block or package code? Absolutely! Should we move code sniffer and code fixing functionality from the core console command to this tool? Yes, please.
+
+## FAQ
+
+-
 
 ## Why is this tool not built into the core?
 
