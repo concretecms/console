@@ -3,29 +3,33 @@ name: PHPUnit
 on: [push, pull_request]
 
 jobs:
-  build-lowest:
+  phpunit:
+    name: PHPUnit
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        php: ['7.1', '8.0']
     steps:
-      - uses: actions/checkout@v2
-      - uses: php-actions/composer@v5
-      - name: PHPUnit Tests
-        uses: php-actions/phpunit@v2
-        with:
-          php_extensions: mbstring dom xml intl
-          configuration: phpunit.xml.dist
-          args: --coverage-text
-          php_version: 7.1
-          version: 7
+      - name: Checkout
+        uses: actions/checkout@v2
 
-  build-latest:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - uses: php-actions/composer@v5
-      - name: PHPUnit Tests
-        uses: php-actions/phpunit@v2
+      - name: Setup PHP with specific version of PECL extension
+        uses: shivammathur/setup-php@releases/v2
         with:
-          configuration: phpunit.xml.dist
-          args: --coverage-text
+          php-version: ${{ matrix.php }}
+          extensions: mbstring
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-
+      - name: Install dependencies
+        run: composer install --prefer-dist
+      - name: Run PHPUnit
+        run: ./vendor/bin/phpunit
