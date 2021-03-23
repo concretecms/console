@@ -1,4 +1,8 @@
 # Concrete Console
+![PHPUnit](https://github.com/concrete5/console/actions/workflows/phpunit.yml/badge.svg)
+![PHPCS](https://github.com/concrete5/console/actions/workflows/phpcs.yml/badge.svg)
+![Psalm](https://github.com/concrete5/console/actions/workflows/psalm.yml/badge.svg)
+
 
 A command line utility for working with Concrete CMS.
 
