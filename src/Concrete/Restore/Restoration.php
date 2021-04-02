@@ -120,7 +120,7 @@ class Restoration
             );
 
             if (file_exists($fullPath)) {
-                $results[] = $fullPath;
+                $results[] = realpath($fullPath);
             }
         }
 
