@@ -43,9 +43,13 @@ abstract class AbstractDirectoryExtractStrategy extends AbstractOutputtingStrate
 
             if (!$job->isDryRun()) {
                 $fs = new Filesystem(new Local($dir));
-                if (!$fs->deleteDir(basename($file))) {
-                    return false;
+
+                foreach ($fs->listContents($dir) as $file) {
+                    if (!$fs->get($file)->delete()) {
+                        return false;
+                    }
                 }
+
                 $output->outputDone();
             } else {
                 $output->outputDryrun();
