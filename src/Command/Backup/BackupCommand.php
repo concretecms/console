@@ -17,6 +17,7 @@ use League\Container\Container;
 use Phar;
 use PharData;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 use Throwable;
 
@@ -330,7 +331,7 @@ class BackupCommand extends Command
         $compressed->buildFromDirectory($directory);
 
         $this->output->writeln(['<fg=green>', 'Successfully created backup file at:<fg=cyan>']);
-        $this->output->writeln($compressed->getPath(), self::VERBOSITY_QUIET);
+        $this->output->writeln($compressed->getPath(), OutputInterface::VERBOSITY_QUIET);
         $this->output->writeln('</>');
     }
 }
