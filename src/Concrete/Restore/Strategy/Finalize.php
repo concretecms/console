@@ -21,7 +21,8 @@ class Finalize extends AbstractOutputtingStrategy
         return $this->generateProxies($job, $cliPath)
             && $this->clearCache($job, $cliPath)
             && $this->restoreIndexes($job)
-            && $this->sync($job);
+            && $this->sync($job)
+            && $this->reloadFpm($job);
     }
 
     public function clean(Restoration $job): bool
@@ -56,7 +57,6 @@ class Finalize extends AbstractOutputtingStrategy
             }
         }
 
-        $output->outputFinal();
         return true;
     }
 
@@ -116,5 +116,29 @@ class Finalize extends AbstractOutputtingStrategy
 
         $output->outputDone('Failed', '<fg=red>');
         return false;
+    }
+
+    private function reloadFpm(Restoration $job): bool
+    {
+        $reloadFpmCommand = $job->getAttributes()['reload-fpm-command'] ?? '';
+        if ($reloadFpmCommand) {
+            $output = $this->getOutputStyle();
+            $output->outputStep('Reloading PHP-FPM');
+
+            if ($job->isDryRun()) {
+                $output->outputDryrun();
+            } else {
+                $result = process($reloadFpmCommand)->mustRun();
+                if ($result->isSuccessful()) {
+                    $output->outputDone();
+                } else {
+                    return false;
+                }
+            }
+
+            $output->outputFinal();
+        }
+
+        return true;
     }
 }

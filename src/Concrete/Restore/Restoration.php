@@ -27,12 +27,16 @@ class Restoration
     /** @var bool */
     protected $isDryRun;
 
+    /** @var array<string, string> */
+    protected $attributes = [];
+
     public static function forBackup(
         PharData $backup,
         Manifest $manifest,
         Installation $install,
         string $temp,
-        bool $dryrun
+        bool $dryrun,
+        array $attributes = []
     ): Restoration {
         $self = new Restoration();
         $self->backup = $backup;
@@ -40,6 +44,7 @@ class Restoration
         $self->install = $install;
         $self->temp = $temp;
         $self->isDryRun = $dryrun;
+        $self->attributes = $attributes;
 
         return $self;
     }
@@ -141,5 +146,10 @@ class Restoration
     public function isDryRun(): bool
     {
         return $this->isDryRun;
+    }
+
+    public function getAttributes(): array
+    {
+        return $this->attributes;
     }
 }

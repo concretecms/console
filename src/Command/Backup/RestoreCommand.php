@@ -57,7 +57,8 @@ class RestoreCommand extends Command
             $manifest,
             $installation,
             Platform::tempDirectory(true),
-            !!$input->getOption('dryrun')
+            !!$input->getOption('dryrun'),
+            ['reload-fpm-command' => $input->getOption('reload-fpm-command')]
         );
 
         try {
@@ -76,7 +77,7 @@ class RestoreCommand extends Command
             ->command(
                 'backup:restore backupFile [-D|--dryrun] 
                         [--skip-db] [--skip-core] [--skip-packages] [--skip-config] [--skip-files] [--skip-application] 
-                        [--skip-index] [--skip-database]',
+                        [--skip-index] [--skip-database] [--reload-fpm-command=]',
                 self::class,
                 ['restore']
             )
@@ -92,6 +93,7 @@ class RestoreCommand extends Command
                     '--skip-application' => 'Skip restoring the full application directory',
                     '--skip-index' => 'Skip the index.php file',
                     '--skip-database' => 'Skip restoring the database',
+                    '--reload-fpm-command' => 'Command to run to reload FPM if needed',
                 ]
             );
     }

@@ -22,6 +22,7 @@ class EnableMaintenanceMode extends AbstractOutputtingStrategy
         $maintenance = Config::maintenancePage($installation);
         $cachePath = $job->tempDir('indexes');
         $found = false;
+
         foreach ($check as $item) {
             if (!file_exists($installPath . $item)) {
                 continue;
@@ -43,6 +44,22 @@ class EnableMaintenanceMode extends AbstractOutputtingStrategy
                 $output->outputDone();
             }
             $found = true;
+        }
+
+        $reloadFpmCommand = $job->getAttributes()['reload-fpm-command'] ?? '';
+        if ($reloadFpmCommand) {
+            $output->outputStep('Reloading PHP-FPM');
+
+            if ($job->isDryRun()) {
+                $output->outputDryrun();
+            } else {
+                $result = process($reloadFpmCommand)->mustRun();
+                if ($result->isSuccessful()) {
+                    $output->outputDone();
+                } else {
+                    return false;
+                }
+            }
         }
 
         $output->outputFinal();
