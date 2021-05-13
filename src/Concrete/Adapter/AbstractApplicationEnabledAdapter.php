@@ -4,6 +4,7 @@ namespace Concrete\Console\Concrete\Adapter;
 
 use Concrete\Console\Concrete\Connection\ApplicationEnabledConnectionInterface;
 use Concrete\Console\Concrete\Connection\ConnectionInterface;
+use Concrete\Console\Util\Installation;
 use Concrete\Core\Application\Application;
 
 abstract class AbstractApplicationEnabledAdapter implements AdapterInterface
@@ -38,12 +39,14 @@ abstract class AbstractApplicationEnabledAdapter implements AdapterInterface
     {
         chdir($path);
 
+        $core = Installation::getConcretePath($path);
+
         // Setup
-        $this->defineConstants($path);
-        $this->registerAutoload($path);
+        $this->defineConstants($path, $core);
+        $this->registerAutoload($path, $core);
 
         // Get the concrete5 application
-        $cms = $this->getApplicationInstance($path);
+        $cms = $this->getApplicationInstance($path, $core);
 
         // Boot the runtime
         $this->bootApplication($cms);
@@ -52,38 +55,41 @@ abstract class AbstractApplicationEnabledAdapter implements AdapterInterface
     }
 
     /**
-     * @param $path
+     * @param string $path
+     * @param string $core
      */
-    protected function defineConstants(string $path): void
+    protected function defineConstants(string $path, string $core): void
     {
         // Define some required constants
-        define('DIR_BASE', $path);
+        define('DIR_BASE', dirname($core));
         define('C5_ENVIRONMENT_ONLY', true);
 
         // Load in the rest of them
-        require $path . '/concrete/bootstrap/configure.php';
+        require $core . '/bootstrap/configure.php';
     }
 
     /**
-     * @param $path
+     * @param string $path
+     * @param string $core
      */
-    protected function registerAutoload(string $path): void
+    protected function registerAutoload(string $path, string $core): void
     {
         // Load in concrete5's autoloader
-        require $path . '/concrete/bootstrap/autoload.php';
+        require $core . '/bootstrap/autoload.php';
     }
 
     /**
-     * @param $path
+     * @param string $path
+     * @param string $core
      * @return Application
      */
-    protected function getApplicationInstance(string $path): Application
+    protected function getApplicationInstance(string $path, string $core): Application
     {
-        return require $path . '/concrete/bootstrap/start.php';
+        return require $core . '/bootstrap/start.php';
     }
 
     /**
-     * @param $cms
+     * @param Application $cms
      */
     protected function bootApplication(Application $cms): void
     {

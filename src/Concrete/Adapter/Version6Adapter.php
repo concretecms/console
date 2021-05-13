@@ -4,6 +4,7 @@ namespace Concrete\Console\Concrete\Adapter;
 
 use Concrete\Console\Concrete\Connection\ConnectionInterface;
 use Concrete\Console\Concrete\Connection\LegacyConnection;
+use Concrete\Console\Util\Installation;
 use RuntimeException;
 
 class Version6Adapter implements AdapterInterface
@@ -33,23 +34,24 @@ class Version6Adapter implements AdapterInterface
         chdir($path);
 
         // Define a couple things concrete5 expects
-        define('DIR_BASE', $path);
+        $core = Installation::getConcretePath($path);
+        define('DIR_BASE', dirname($core));
         define('C5_ENVIRONMENT_ONLY', true);
 
         // Set the error reporting low
         error_reporting(E_ALL | ~E_NOTICE | ~E_WARNING | ~E_STRICT);
 
         // Add 3rdparty to include path
-        set_include_path(get_include_path() . PATH_SEPARATOR . $path . '/concrete/libraries/3rdparty');
+        set_include_path(get_include_path() . PATH_SEPARATOR . $core . '/libraries/3rdparty');
 
         // Include Adodb first, not sure why this was needed
-        @require_once $path . '/concrete/libraries/3rdparty/adodb/adodb.inc.php';
+        @require_once $core . '/libraries/3rdparty/adodb/adodb.inc.php';
 
         // Include Loader explicitly
-        @require_once $path . '/concrete/libraries/loader.php';
+        @require_once $core . '/libraries/loader.php';
 
         // Load in legacy dispatcher
-        @require_once $path . '/concrete/dispatcher.php';
+        @require_once $core . '/dispatcher.php';
 
         // Adodb Stuff
         $GLOBALS['ADODB_ASSOC_CASE'] = 2;
