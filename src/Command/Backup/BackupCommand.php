@@ -327,8 +327,12 @@ class BackupCommand extends Command
 
         $this->output->writeln(sprintf('Compressing directory: %s', $outputFile));
 
-        $compressed = new PharData($outputDirectory . '/' . $outputFile . '.tar.gz', null, null, Phar::GZ);
-        $compressed->buildFromDirectory($directory);
+        $build = new PharData($outputDirectory . '/' . $outputFile . '.tar', null, null);
+        $build->buildFromDirectory($directory);
+        $compressed = $build->compress(Phar::GZ);
+
+        // Get rid of the uncompressed version
+        unlink($build->getPath());
 
         $this->output->writeln(['<fg=green>', 'Successfully created backup file at:<fg=cyan>']);
         $this->output->writeln($compressed->getPath(), OutputInterface::VERBOSITY_QUIET);
