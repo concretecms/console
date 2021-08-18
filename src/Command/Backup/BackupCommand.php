@@ -317,6 +317,11 @@ class BackupCommand extends Command
 
     protected function compressDirectory(string $directory, string $outputDirectory, string $outputFile = null): void
     {
+        $disablePhar = false;
+        if (!in_array('phar', \stream_get_wrappers())) {
+            $disablePhar = true;
+            \stream_wrapper_restore('phar');
+        }
         if (!$outputFile) {
             $app = $this->getApplication();
             $siteName = $app->make('site')->getSite()->getSiteName();
@@ -337,5 +342,9 @@ class BackupCommand extends Command
         $this->output->writeln(['<fg=green>', 'Successfully created backup file at:<fg=cyan>']);
         $this->output->writeln($compressed->getPath(), OutputInterface::VERBOSITY_QUIET);
         $this->output->writeln('</>');
+
+        if ($disablePhar && in_array('phar', stream_get_wrappers(), true)) {
+            stream_wrapper_unregister('phar');
+        }
     }
 }
