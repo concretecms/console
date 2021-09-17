@@ -22,6 +22,12 @@ class RestoreCommand extends Command
         ManifestFactory $factory,
         InputInterface $input
     ) {
+        $disablePhar = false;
+        if (!in_array('phar', \stream_get_wrappers())) {
+            $disablePhar = true;
+            \stream_wrapper_restore('phar');
+        }
+
         $installation = $this->getInstallation();
         $manifest = $factory->forBackup($backupFile);
 
@@ -48,6 +54,7 @@ class RestoreCommand extends Command
         if ($input->getOption('skip-application')) {
             $restore->restoreApplication(true);
         }
+
         if ($input->getOption('skip-core')) {
             $restore->restoreCore(true);
         }
@@ -68,6 +75,10 @@ class RestoreCommand extends Command
             $this->output->writeln('Cleaning up...');
             $finalize = new Finalize();
             $finalize->clean($job);
+
+            if ($disablePhar && in_array('phar', stream_get_wrappers(), true)) {
+                stream_wrapper_unregister('phar');
+            }
         }
     }
 
