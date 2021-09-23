@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Concrete\Console\Util;
 
 use Concrete\Console\Exception\Installation\InstallationNotFound;
@@ -68,5 +70,4 @@ class Installation
 
         throw InstallationNotFound::atPath($path);
     }
-
 }

@@ -11,4 +11,6 @@
 
     <!-- Use the PSR12 Standard-->
     <rule ref="PSR12" />
+    <!-- Extra rules -->
+    <rule ref="vendor/squizlabs/php_codesniffer/src/Standards/Generic/Sniffs/PHP/RequireStrictTypesSniff.php"/>
 </ruleset>

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Concrete\Console\Command\Site;
 
 use Concrete\Console\Application;
