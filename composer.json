@@ -32,10 +32,7 @@
   "autoload-dev": {
     "psr-4": {
       "Concrete\\Console\\": "tests/"
-    },
-    "files": [
-      "helpers.php"
-    ]
+    }
   },
   "require-dev": {
     "ext-simplexml": "*",
