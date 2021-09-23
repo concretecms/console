@@ -1,6 +1,12 @@
 .DS_Store
 .idea
-vendor
+.phpunit.result.cache
+box.json
+box.phar
 build
 composer.lock
-.phpunit.result.cache
+concrete.phar
+concrete.sig
+release-notes.txt
+vendor
+version.txt

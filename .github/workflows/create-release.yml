@@ -1,0 +1,98 @@
+name: Create GitHub release
+
+on:
+  create:
+    tags:
+      - "*[0-9]+.[0-9]+.[0-9]*"
+
+jobs:
+  create-release:
+    name: Create release
+    runs-on: ubuntu-latest
+    env:
+      # Check the changes in these files/directories to build automatically the release notes
+      PATHS_FOR_RELEASE_NOTES: "box.json.dist composer.json bin/ src/"
+      # Its value will be set by the action (if release-like tag is created)
+      VERSION: ""
+      # Its value will be set by the action (if release-like tag is created)
+      PRERELEASE: ""
+      # The version of PHP to be used here
+      INSTALLER_PHP_VERSION: '7.3'
+      # The minimum PHP version the built phar should support
+      PHAR_PHP_VERSION: '7.1'
+      # The version of Box to be used
+      BOX_VERSION: 3.13.0
+    steps:
+      - name: Check tag format
+        if: github.event_name == 'create' && github.event.ref_type == 'tag'
+        run: |
+          VERSION="$(printf '%s' "$GITHUB_REF" | sed -E 's/^refs\/tags\/v?([0-9]+\.[0-9]+\.[0-9]+.*)$/\1/')"
+          if printf '%s' "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]'; then
+            case "$VERSION" in
+              *dev* | *snap* | *[Aa]* | *[Bb]* | *[Rr][Cc]*)
+                PRERELEASE=true
+                ;;
+              *)
+                PRERELEASE=false
+                ;;
+            esac
+            printf 'The tag %s is for version %s\n' "${GITHUB_REF#refs/tags/}" "$VERSION"
+            printf 'Pre-release: %s\n' "$PRERELEASE"
+            printf 'VERSION=%s\n' "$VERSION" >> "$GITHUB_ENV"
+            printf 'PRERELEASE=%s\n' "$PRERELEASE" >> "$GITHUB_ENV"
+          else
+            printf 'The ref %s is not for a version\n' "$GITHUB_REF"
+          fi
+      - name: Checkout
+        if: env.VERSION != ''
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Setup PHP
+        if: env.VERSION != ''
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.INSTALLER_PHP_VERSION }}
+          tools: composer:v2
+          coverage: none
+          ini-values: phar.readonly=0
+      - name: Configure environment
+        if: env.VERSION != ''
+        run: composer config platform.php "$PHAR_PHP_VERSION"
+      - name: Install Composer dependencies
+        if: env.VERSION != ''
+        run: composer update --no-dev --no-progress --optimize-autoloader --ansi --no-interaction --no-cache
+      - name: Download Box
+        if: env.VERSION != ''
+        run: curl -Lf -o box.phar "https://github.com/box-project/box/releases/download/$BOX_VERSION/box.phar"
+      - name: Create the PHAR file
+        if: env.VERSION != ''
+        run: php box.phar compile --ansi --no-interaction
+      - name: Check if the PHAR file works
+        if: env.VERSION != ''
+        run: ./concrete.phar list --ansi
+      - name: Create the signature file
+        if: env.VERSION != ''
+        run: |
+          HASH="$(sha384sum concrete.phar | cut -f1 -d' ')"
+          printf 'Calculated signature: %s\n' "$HASH"
+          printf '%s' "$HASH" > concrete.sig
+      - name: Create the version file
+        if: env.VERSION != ''
+        run: printf '%s' "$VERSION" > version.txt
+      - name: Build release notes
+        if: env.VERSION != ''
+        run: ./.github/workflows/create-release-notes release-notes.txt
+      - name: Publish release
+        if: env.VERSION != ''
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: release-notes.txt
+          draft: false
+          prerelease: ${{ env.PRERELEASE }}
+          files: |
+            concrete.phar
+            concrete.sig
+            version.txt
+          name: v${{ env.VERSION }}
+          fail_on_unmatched_files: true
