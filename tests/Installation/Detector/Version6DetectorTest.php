@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Concrete\Console\Installation\Detector;
 
 class Version6DetectorTest extends AbstractVersionDetectorTest
