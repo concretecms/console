@@ -41,7 +41,9 @@ class Application extends SillyApplication
 
     public function __construct(Container $container)
     {
-        parent::__construct('Concrete Console', '0.1');
+        // This value will be replaced automatically when building the phar file.
+        $version = '@ccm_version@';
+        parent::__construct('Concrete Console', $version === '@ccm_' . 'version@' ? '' : ltrim($version, 'v'));
         $this->useContainer($container, true, true);
     }
 

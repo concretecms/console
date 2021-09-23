@@ -1,0 +1,45 @@
+{
+    "output": "./ccm.phar",
+    "git-tag": "ccm_version",
+    "force-autodiscovery": true,
+    "finder": [
+        {
+            "in": "art"
+        },
+        {
+            "in": "vendor",
+            "notName": [
+                "*.dist",
+                "*.md",
+                "*.neon",
+                "*.txt",
+                "appveyor.yml",
+                "build.xml",
+                "CodeSniffer.conf.*",
+                "composer.json",
+                "composer.lock",
+                "LICENSE",
+                "Makefile",
+                "phive.xml",
+                "phpbench.json",
+                "phpcs.xml",
+                "phpcs.xsd",
+                "phpunit.xml",
+                "psalm.xml",
+                "README"
+            ],
+            "exclude": [
+                "bin",
+                "docs",
+                "examples",
+                "test",
+                "tests",
+                "Tests"
+            ]
+        }
+    ],
+    "compactors": [
+        "KevinGH\\Box\\Compactor\\Php",
+        "KevinGH\\Box\\Compactor\\Json"
+    ]
+}

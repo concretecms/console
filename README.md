@@ -7,8 +7,34 @@
 A command line utility for working with Concrete CMS.
 
 ## Installation
-### Global Installation
-The concrete console cli tool is meant to be installed globally with composer
+
+### As a PHAR file
+
+The latest version of the console cli tool is available at the following address:
+
+https://github.com/concrete5/console/releases/latest/download/ccm.phar
+
+#### Installation on Posix Systems
+
+You simply have to download it and make it executable:
+
+```sh
+curl -L -o /usr/local/bin/ccm https://github.com/concrete5/console/releases/latest/download/ccm.phar
+chmod +x /usr/local/bin/ccm
+```
+
+#### Installation on Windows Systems
+
+You can download the `ccm.phar` file in a directory listed in your `PATH` environment variable (for example: `C:\Windows\System32`),
+and create a `ccm.bat` file in the same directory with the following contents:
+
+```batch
+@php "%~dpn0.phar" %*
+```
+
+### With composer
+
+The concrete console cli tool can also be installed globally with composer
 
     composer global require concrete5/console
     

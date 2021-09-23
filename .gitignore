@@ -1,6 +1,7 @@
-.DS_Store
-.idea
-vendor
-build
-composer.lock
 .phpunit.result.cache
+box.json
+box.phar
+build
+ccm.phar
+composer.lock
+vendor
