@@ -1,0 +1,48 @@
+#!/bin/sh
+
+# Generate a file containing the release notes.
+#
+# Required environment variables:
+# - GITHUB_WORKSPACE the path to the repository root directory
+# - GITHUB_REF the ref we are currently on (eg 'refs/tags/1.2.3')
+# - PATHS_FOR_RELEASE_NOTES the list of files/directories whose changes are included in the release notes
+#
+# Arguments
+# $1 the name of the file to be generated (if not absolute: relative to $GITHUB_WORKSPACE)
+
+set -o errexit
+set -o nounset
+
+CDPATH='' cd -- "$GITHUB_WORKSPACE"
+CURRENT_TAG_FOUND=n
+PREVIUOS_TAG=
+RELEASE_NOTES=
+for TAG in $(git tag --list --sort=-version:refname); do
+    if printf '%s' "$TAG" | grep -Eq '^v?[0-9]+\.[0-9]+\.[0-9]+'; then
+        if [ $CURRENT_TAG_FOUND = n ]; then
+            if [ "$TAG" = "${GITHUB_REF#refs/tags/}" ]; then
+                CURRENT_TAG_FOUND=y
+            fi
+        else
+            PREVIUOS_TAG="$TAG"
+            break
+        fi
+    fi
+done
+if [ $CURRENT_TAG_FOUND = n ]; then
+    echo 'Unable to build the release notes (current tag not found)'
+elif [ -z "$PREVIUOS_TAG" ]; then
+    echo 'Unable to build the release notes (previous release tag not found)'
+else
+    # shellcheck disable=SC2086
+    RELEASE_NOTES="$(git log --format='- %s' --no-merges --reverse "refs/tags/$PREVIUOS_TAG...$GITHUB_REF" -- $PATHS_FOR_RELEASE_NOTES)"
+    if [ -z "$RELEASE_NOTES" ]; then
+        printf 'Unable to build the release notes (empty commit list since %s)\n' "$PREVIUOS_TAG"
+    else
+        printf 'Detected release notes since %s:\n%s\n' "$PREVIUOS_TAG" "$RELEASE_NOTES"
+    fi
+fi
+if [ -z "$RELEASE_NOTES" ]; then
+    RELEASE_NOTES='n/a'
+fi
+printf '%s' "$RELEASE_NOTES" >"$1"
