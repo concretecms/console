@@ -1,3 +1,5 @@
+.DS_Store
+.idea
 .phpunit.result.cache
 box.json
 box.phar
@@ -5,4 +7,6 @@ build
 composer.lock
 concrete.phar
 concrete.sig
+release-notes.txt
 vendor
+version.txt
