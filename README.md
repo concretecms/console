@@ -20,7 +20,7 @@ If you haven't already, make sure to add the global composer bin directory to yo
 
 You can run commands just like this
 
-    concrete info
+    ccm info
     
 Which should get you something like:
 
@@ -34,7 +34,7 @@ Which should get you something like:
     
 If you want to run a command against a different site, or if you've installed the console utility globally, any command that operates against a particular Concrete installation also has an `--installation` option (or `-i` for short.)
 
-    concrete info --installation=/path/to/my/site
+    ccm info --installation=/path/to/my/site
     
 Returns
 
@@ -51,7 +51,7 @@ Returns
 The most important items we want to currently focus on are:
 
 * ~~Add the ability to dump sites, configurations, files and more into a standardized backup archive.~~
-* ~~Add the ability to _restore_ a Concrete site from one of these standardized backup archives, by passing a file to a given `concrete restore my_backup.gz` command.~~
+* ~~Add the ability to _restore_ a Concrete site from one of these standardized backup archives, by passing a file to a given `ccm restore my_backup.gz` command.~~
 * Improved stability of backup and restore
 * Restore into an uninstalled concrete5
 * Backing up a version 6 site

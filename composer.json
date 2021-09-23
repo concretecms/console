@@ -16,7 +16,7 @@
     "league/flysystem": "^1.0"
   },
   "bin": [
-    "bin/concrete"
+    "bin/ccm"
   ],
   "conflict": {
     "concrete5/core": "*"
