@@ -9,19 +9,18 @@ use Symfony\Component\Console\Output\NullOutput;
 
 trait OutputStyleAwareTrait
 {
-
     /**
      * @var OutputStyle|null
      */
-    protected $traitOutputStyle;
+    protected $output;
 
     public function setOutputStyle(OutputStyle $outputStyle): void
     {
-        $this->traitOutputStyle = $outputStyle;
+        $this->output = $outputStyle;
     }
 
     protected function getOutputStyle(): OutputStyle
     {
-        return $this->traitOutputStyle ?: new OutputStyle(new ArgvInput([]), new NullOutput());
+        return $this->output ?: new OutputStyle(new ArgvInput([]), new NullOutput());
     }
 }
