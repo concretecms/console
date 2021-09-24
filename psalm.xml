@@ -12,6 +12,8 @@
         <file name=".psalm/stubs/Concrete/Core/Application.php.stub"/>
     </stubs>
     <projectFiles>
+        <file name="bin/concrete" />
+        <file name="helpers.php" />
         <directory name="src" />
         <ignoreFiles>
             <directory name="vendor" />
