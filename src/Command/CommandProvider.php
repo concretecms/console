@@ -9,12 +9,12 @@ use League\Container\Container;
 
 class CommandProvider implements CommandGroupInterface
 {
-
     public static function register(Container $container, Application $console): void
     {
         self::backupCommands($container, $console);
         self::databaseCommands($container, $console);
         self::siteCommands($container, $console);
+        self::pharCommands($container, $console);
     }
 
     public static function backupCommands(Container $container, Application $console): void
@@ -33,5 +33,13 @@ class CommandProvider implements CommandGroupInterface
     {
         Site\InfoCommand::register($container, $console);
         Site\SyncCommand::register($container, $console);
+    }
+
+    private static function pharCommands(Container $container, Application $console): void
+    {
+        if (\Phar::running() === '') {
+            return;
+        }
+        Phar\SelfUpdateCommand::register($container, $console);
     }
 }
