@@ -38,7 +38,7 @@ class SelfUpdateCommand implements
     }
 
     /**
-     * @throws \RuntimeException
+     * @throws \RuntimeException when there's a download error, or when we can't overwrite the current PHAR 
      */
     public function __invoke(Application $console): int
     {
@@ -75,7 +75,7 @@ EOT
     }
 
     /**
-     * @throws \RuntimeException
+     * @throws \RuntimeException in case of missing requirements (eg PHAR not writeable)
      */
     private function checkRequirements(): void
     {
@@ -91,7 +91,7 @@ EOT
     }
 
     /**
-     * @throws \RuntimeException
+     * @throws \RuntimeException when downloading the version file fails
      */
     private function getMostRecentAvailableVersion(): string
     {
@@ -99,7 +99,7 @@ EOT
     }
 
     /**
-     * @throws \RuntimeException
+     * @throws \RuntimeException when the download fails, or when there's an hash mismatch
      */
     private function fetchPharContents(): string
     {
@@ -126,7 +126,7 @@ EOT
     }
 
     /**
-     * @throws \RuntimeException
+     * @throws \RuntimeException when the download fails
      */
     private function download(string $file): string
     {
@@ -161,7 +161,7 @@ EOT
     }
 
     /**
-     * @throws \RuntimeException
+     * @throws \RuntimeException when we can't create a temporary folder or if we can't overwrite the current PHAR
      */
     private function updateMyPhar(string &$pharContents): void
     {
@@ -172,6 +172,12 @@ EOT
         set_error_handler(static function(): void {}, -1);
         $pharPermissions = fileperms($pharPath);
         restore_error_handler();
+        for ($index = 0; ; $index++) {
+            $tempFile = "{$pharPath}.new.{$index}";
+            if (!file_exists($tempFile)) {
+                break;
+            }
+        }
         $error = 'Unknown error';
         set_error_handler(static function(int $errno, string $errstr) use (&$error): void {
             $error = trim($errstr);
@@ -179,10 +185,25 @@ EOT
                 $error = "Unknown error (code: {$errno})";
             }
         }, -1);
-        $savedBytes = file_put_contents($pharPath, $pharContents);
+        $savedBytes = file_put_contents($tempFile, $pharContents);
         restore_error_handler();
         if ($savedBytes === false) {
-            throw new RuntimeException("Failed to set the new PHAR contents:\n{$error}");
+            throw new RuntimeException("Failed to write the PHAR contents to a temporary file:\n{$error}");
+        }
+        $error = 'Unknown error';
+        set_error_handler(static function(int $errno, string $errstr) use (&$error): void {
+            $error = trim($errstr);
+            if ($error === '') {
+                $error = "Unknown error (code: {$errno})";
+            }
+        }, -1);
+        $renamed = rename($tempFile, $pharPath);
+        restore_error_handler();
+        if ($renamed === false) {
+            set_error_handler(static function(): void {}, -1);
+            unlink($tempFile);
+            restore_error_handler();
+            throw new RuntimeException("Failed to set the replace the PHAR:\n{$error}");
         }
         if ($pharPermissions !== false) {
             set_error_handler(static function(): void {}, -1);
