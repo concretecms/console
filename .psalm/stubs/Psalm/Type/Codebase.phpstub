@@ -1,0 +1,7 @@
+<?php
+
+namespace Psalm\Type;
+
+class Union
+{
+}

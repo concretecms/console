@@ -8,9 +8,6 @@ use Concrete\Console\Application;
 use Concrete\Console\Command\Command;
 use League\Container\Container;
 use Symfony\Component\Console\Input\Input;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Process\Process;
 
 class DumpCommand extends Command
 {

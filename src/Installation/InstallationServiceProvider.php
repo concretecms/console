@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Concrete\Console\Installation;
 
-use Concrete\Console\Installation\InstallationAwareInterface;
 use Concrete\Console\Installation\Detector\BaseDetector;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
-use Symfony\Component\Console\Input\Input;
 use Symfony\Component\Console\Input\InputInterface;
 
 class InstallationServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface

@@ -119,10 +119,6 @@ class RestoreDatabase extends AbstractOutputtingStrategy implements ConnectionAw
         }
     }
 
-    /**
-     * @param Restoration $job
-     * @return DatabaseCredentialsType
-     */
     private function getDatabaseCredentials(Restoration $job): array
     {
         $extractConfigCredentials = function (array $config): array {

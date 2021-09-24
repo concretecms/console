@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Concrete\Console\Installation\Detector;
 
-use Concrete\Console\TestCase;
-
 class Version7DetectorTest extends AbstractVersionDetectorTest
 {
 

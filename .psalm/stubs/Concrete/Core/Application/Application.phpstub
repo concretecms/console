@@ -1,5 +1,7 @@
 <?php
 
+namespace Concrete\Core\Application;
+
 /**
  * @method make(...$args): mixed
  */

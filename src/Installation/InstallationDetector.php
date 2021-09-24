@@ -6,8 +6,6 @@ namespace Concrete\Console\Installation;
 
 use Concrete\Console\Exception\Installation\InstallationNotFound;
 use Concrete\Console\Installation\Detector\DetectorInterface;
-use Concrete\Console\Installation\Detector\BaseDetector;
-use Concrete\Console\Installation\Detector\Version6Detector;
 
 class InstallationDetector
 {

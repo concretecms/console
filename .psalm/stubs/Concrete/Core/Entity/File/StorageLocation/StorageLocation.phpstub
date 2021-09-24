@@ -1,0 +1,7 @@
+<?php
+
+namespace Concrete\Core\Entity\File\StorageLocation;
+
+class StorageLocation
+{
+}

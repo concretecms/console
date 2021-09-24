@@ -8,8 +8,30 @@
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
 >
     <stubs>
-        <file name=".psalm/stubs/Composer/Semver/Comparator.php.stub"/>
-        <file name=".psalm/stubs/Concrete/Core/Application.php.stub"/>
+        <file name=".psalm/stubs/Composer/Semver/Comparator.phpstub" />
+        <file name=".psalm/stubs/Concrete/Core/Application/Application.phpstub" />
+        <file name=".psalm/stubs/Concrete/Core/Cache/Driver/FileSystemStashDriver.phpstub" />
+        <file name=".psalm/stubs/Concrete/Core/Cache/Driver/RedisStashDriver.phpstub" />
+        <file name=".psalm/stubs/Concrete/Core/Entity/File/StorageLocation/StorageLocation.phpstub" />
+        <file name=".psalm/stubs/Concrete/Core/Entity/Site/Site.phpstub" />
+        <file name=".psalm/stubs/Concrete/Core/File/StorageLocation/Configuration/StorageLocationFactory.phpstub" />
+        <file name=".psalm/stubs/Concrete/Core/File/StorageLocation/StorageLocationFactory.phpstub" />
+        <file name=".psalm/stubs/Concrete/Core/Package/ItemCategory/StorageLocationType.phpstub" />
+        <file name=".psalm/stubs/Concrete/Core/Package/PackageService.phpstub" />
+        <file name=".psalm/stubs/Concrete/Core/System/Info.phpstub" />
+        <file name=".psalm/stubs/Concrete/Core/System/Mutex/FileLockMutex.phpstub" />
+        <file name=".psalm/stubs/Concrete/Core/System/Mutex/SemaphoreMutex.phpstub" />
+        <file name=".psalm/stubs/Concrete5_Model_Collection.phpstub" />
+        <file name=".psalm/stubs/Loader.phpstub" />
+        <file name=".psalm/stubs/PhpParser/Node/Expr.phpstub" />
+        <file name=".psalm/stubs/PhpParser/Node/Expr/ClassConstFetch.phpstub" />
+        <file name=".psalm/stubs/PhpParser/Node/Expr/MethodCall.phpstub" />
+        <file name=".psalm/stubs/Psalm/Codebase.phpstub" />
+        <file name=".psalm/stubs/Psalm/Context.phpstub" />
+        <file name=".psalm/stubs/Psalm/Plugin/Hook/AfterMethodCallAnalysisInterface.phpstub" />
+        <file name=".psalm/stubs/Psalm/StatementsSource.phpstub" />
+        <file name=".psalm/stubs/Psalm/Type/Atomic/Codebase.phpstub" />
+        <file name=".psalm/stubs/Psalm/Type/Codebase.phpstub" />
     </stubs>
     <projectFiles>
         <file name="bin/concrete" />

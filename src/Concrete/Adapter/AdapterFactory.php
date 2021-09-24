@@ -6,7 +6,6 @@ namespace Concrete\Console\Concrete\Adapter;
 
 use Composer\Semver\Comparator;
 use Concrete\Console\Exception\Installation\VersionMismatch;
-use InvalidArgumentException;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
 

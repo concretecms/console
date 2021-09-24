@@ -38,7 +38,7 @@ class Manifest implements \JsonSerializable
     /** @var string[] */
     protected $applicationContents = [];
 
-    /** @psalm-var StorageLocationType[] */
+    /** @var StorageLocationType[] */
     protected $storageLocations = [];
 
     /** @var ?\DateTimeImmutable */
