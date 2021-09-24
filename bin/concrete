@@ -1,23 +1,31 @@
 #!/usr/bin/env php
 <?php
 
+declare(strict_types=1);
+
 use Concrete\Console\Application;
+use Concrete\Console\Command;
 use Concrete\Console\Concrete\ConcreteServiceProvider;
+use Concrete\Console\Exception;
 use Concrete\Console\Installation\InstallationServiceProvider;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
 use NunoMaduro\Collision\Provider as Collision;
-use Concrete\Console\Command;
-use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Console\Input\Input;
-use Symfony\Component\Console\Output\ConsoleOutput;
-use Concrete\Console\Exception;
 
 if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
+    /**
+     * @psalm-suppress MissingFile
+     */
     require_once __DIR__ . '/../vendor/autoload.php';
 } elseif (file_exists(__DIR__ . '/../../autoload.php')) {
+    /**
+     * @psalm-suppress MissingFile
+     */
     require_once __DIR__ . '/../../autoload.php';
 } else {
+    /**
+     * @psalm-suppress MissingFile
+     */
     require_once __DIR__ . '/../../../autoload.php';
 }
 
@@ -27,7 +35,10 @@ if (!defined('C5_EXECUTE')) {
 }
 
 // Setup debug stuff if available
-if (class_exists(Collision::class)) (new Collision)->register();
+if (class_exists(Collision::class)) {
+    /** @psalm-suppress MixedMethodCall */
+    (new Collision())->register();
+}
 
 // Set up DI container
 $container = new Container();
@@ -58,7 +69,7 @@ try {
     }
     $output->error($e->getMessage());
     die($e->getCode());
-} catch (\Throwable $e) {
+} catch (Throwable $e) {
     $output = $application->getOutputStyle();
 
     if ($output->isVeryVerbose()) {

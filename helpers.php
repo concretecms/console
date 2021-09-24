@@ -1,11 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
+/**
+ * Quick way to call var_dump() and die().
+ *
+ * @param mixed $args
+ */
 function dd(...$args): void
 {
+    /**
+     * @psalm-suppress ForbiddenCode
+     */
     var_dump(...$args);
     die();
 }
@@ -14,31 +24,28 @@ function dd(...$args): void
  * Safely build a symfony process instance
  *
  * @param string|array $commandline
- * @param string|null $cwd
- * @param array|null $env
  * @param mixed $input
- * @param int $timeout
- * @param array|null $options
- * @return Process
  *
- * @psalm-suppress DeprecatedMethod, ImpureMethodCall
+ * @psalm-suppress ImpureMethodCall
  * @psalm-pure
  */
-function process($commandline, $cwd = null, array $env = null, $input = null, $timeout = 60, array $options = null): Process
+function process($commandline, ?string $cwd = null, ?array $env = null, $input = null, ?float $timeout = 60, ?array $options = null): Process
 {
     $process = null;
     if (is_string($commandline)) {
         if (method_exists(Process::class, 'fromShellCommandLine')) {
-            /** @var Process $process */
             $process = Process::fromShellCommandLine($commandline, $cwd, $env, $input, $timeout);
         }
     }
 
     if (!$process) {
+        /**
+         * @psalm-suppress PossiblyInvalidArgument
+         */
         $process = new Process($commandline, $cwd, $env, $input, $timeout);
     }
 
-    if ($options) {
+    if ($options && method_exists($process, 'setOptions')) {
         $process->setOptions($options);
     }
 
@@ -47,29 +54,31 @@ function process($commandline, $cwd = null, array $env = null, $input = null, $t
 
 function stdoutToOutput(ConsoleOutputInterface $output): Closure
 {
-    return function($message, $channel) use ($output): void {
-        switch ($channel) {
-            case 'STDOUT':
-                $output->writeln($message);
-                break;
-            case 'STDERR':
-                $output->getErrorOutput()->writeln($message, OutputInterface::OUTPUT_RAW);
-                break;
-            default:
-                dd('Unknown message type: ' . $channel);
-        }
-    };
+    return
+        /**
+         * @param string|iterable $message
+         */
+        static function($message, string $channel) use ($output): void {
+            switch ($channel) {
+                case 'STDOUT':
+                    $output->writeln($message);
+                    break;
+                case 'STDERR':
+                    $output->getErrorOutput()->writeln($message, OutputInterface::OUTPUT_RAW);
+                    break;
+                default:
+                    dd('Unknown message type: ' . $channel);
+            }
+        };
 }
 
 if (!function_exists('dot_get')) {
     /**
      * @template T
-     * @param array $array
-     * @param string $key
      * @psalm-param T $default
      * @return T|mixed
      */
-    function dot_get(array $array, string $key, $default = null)
+    function dot_get(array $array, ?string $key, $default = null)
     {
         if (is_null($key)) {
             return $array;
@@ -85,6 +94,9 @@ if (!function_exists('dot_get')) {
 
         foreach (explode('.', $key) as $segment) {
             if (is_array($array) && array_key_exists($segment, $array)) {
+                /**
+                 * @psalm-suppress MixedAssignment
+                 */
                 $array = $array[$segment];
             } else {
                 return $default;
@@ -110,7 +122,11 @@ if (!function_exists('snake_case')) {
 }
 
 if (!function_exists('class_basename')) {
-    function class_basename($classOrInstance): string {
+    /**
+     * @param string|object $classOrInstance
+     */
+    function class_basename($classOrInstance): string
+    {
         if (!is_string($classOrInstance)) {
             $classOrInstance = get_class($classOrInstance);
         }
