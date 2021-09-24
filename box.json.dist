@@ -7,6 +7,12 @@
             "in": "art"
         },
         {
+            "in": ".concrete",
+            "name": [
+                "index.maintenance.php"
+            ]   
+        },
+        {
             "in": "vendor",
             "notName": [
                 "*.dist",
