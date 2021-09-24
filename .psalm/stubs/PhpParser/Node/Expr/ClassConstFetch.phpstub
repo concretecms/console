@@ -1,0 +1,7 @@
+<?php
+
+namespace PhpParser\Node\Expr;
+
+class ClassConstFetch
+{
+}

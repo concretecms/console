@@ -2,8 +2,6 @@
 
 namespace Composer\Semver;
 
-use Composer\Semver\Constraint\Constraint;
-
 class Comparator
 {
     /**
