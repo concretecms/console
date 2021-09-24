@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Concrete\Console\Installation\Detector;
 
 use Concrete\Console\Installation\Version;
-use Concrete\Core\Multilingual\Service\Detector;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
 

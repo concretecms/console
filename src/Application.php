@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Concrete\Console;
 
 use Concrete\Console\Command\CommandProvider;
-use Concrete\Console\Command\Output;
 use Concrete\Console\Command\OutputStyle;
 use Concrete\Console\Command\OutputStyleAwareInterface;
 use League\Container\Container;
@@ -45,6 +44,7 @@ class Application extends SillyApplication
     {
         // This value will be replaced automatically when building the phar file.
         $version = '@concrete_version@';
+        /** @psalm-suppress RedundantCondition */
         parent::__construct('Concrete Console', $version === '@concrete_' . 'version@' ? '' : ltrim($version, 'v'));
         $this->useContainer($container, true, true);
     }

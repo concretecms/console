@@ -64,9 +64,12 @@ class Finalize extends AbstractOutputtingStrategy
 
     private function sync(Restoration $job): bool
     {
-        $sync = $job->tempDir('sync');
-        //$sync = new Rsync();
-        //var_dump($sync->getCommand($sync, $job->getInstallation()));
+        $job->tempDir('sync');
+        /*
+         * $sync = $job->tempDir('sync');
+         * $sync = new Rsync();
+         * var_dump($sync->getCommand($sync, $job->getInstallation()));
+         */
 
         return true;
     }

@@ -53,7 +53,6 @@ class BackupCommand extends Command
             ->setSiteName($site->getSiteName())
             ->setUrl((string)$site->getSiteCanonicalURL());
 
-        $e = null;
         try {
             $manifest = $this->exportDatabase($manifest, $backupDirectory);
             $manifest = $this->exportFiles($manifest, $backupDirectory);

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Concrete\Console\Installation\Detector;
 
-use Concrete\Console\Installation\DatabaseCredentials;
 use Concrete\Console\Installation\Version;
 
 class Version6Detector implements DetectorInterface

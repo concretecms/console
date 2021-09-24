@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Concrete\Console\Concrete\Restore\Strategy;
 
-use Concrete\Console\Command\OutputStyleAwareTrait;
 use Concrete\Console\Concrete\Restore\Restoration;
 
 class RestoreApplication extends AbstractDirectoryExtractStrategy

@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace Concrete\Console\Concrete\Restore\Strategy;
 
 use Concrete\Console\Concrete\Restore\Restoration;
-use Concrete\Console\Concrete\Restore\StrategyInterface;
-use League\Flysystem\Adapter\Local;
-use League\Flysystem\Filesystem;
 
 class RestoreConfig extends AbstractDirectoryExtractStrategy
 {
