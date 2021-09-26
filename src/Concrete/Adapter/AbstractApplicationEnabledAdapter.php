@@ -8,6 +8,7 @@ use Concrete\Console\Concrete\Connection\ApplicationEnabledConnectionInterface;
 use Concrete\Console\Concrete\Connection\ConnectionInterface;
 use Concrete\Console\Util\Installation;
 use Concrete\Core\Application\Application;
+use Phar;
 
 abstract class AbstractApplicationEnabledAdapter implements AdapterInterface
 {
@@ -87,7 +88,13 @@ abstract class AbstractApplicationEnabledAdapter implements AdapterInterface
      */
     protected function getApplicationInstance(string $path, string $core): Application
     {
-        return require $core . '/bootstrap/start.php';
+        try {
+            return require $core . '/bootstrap/start.php';
+        } finally {
+            if (Phar::running() !== '' && !in_array('phar', stream_get_wrappers(), true)) {
+                stream_wrapper_restore('phar');
+            }
+        }
     }
 
     /**
