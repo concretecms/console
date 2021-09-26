@@ -87,7 +87,13 @@ abstract class AbstractApplicationEnabledAdapter implements AdapterInterface
      */
     protected function getApplicationInstance(string $path, string $core): Application
     {
-        return require $core . '/bootstrap/start.php';
+        $app = require DIR_APPLICATION . "/bootstrap/start.php";
+        $app->instance('app', $app);
+        $app->instance('Concrete\Core\Application\Application', $app);
+        $app->instance('Illuminate\Container\Container', $app);
+        $app->getRuntime()->boot();
+
+        return $app;
     }
 
     /**
