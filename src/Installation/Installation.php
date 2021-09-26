@@ -24,8 +24,6 @@ class Installation
 
     /**
      * Installation constructor.
-     * @param string $path
-     * @param Version $version
      */
     public function __construct(string $path, Version $version)
     {
@@ -33,17 +31,11 @@ class Installation
         $this->version = $version;
     }
 
-    /**
-     * @return string
-     */
     public function getPath(): string
     {
         return $this->path;
     }
 
-    /**
-     * @return Version
-     */
     public function getVersion(): Version
     {
         return $this->version;

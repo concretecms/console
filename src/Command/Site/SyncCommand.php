@@ -16,7 +16,7 @@ use Symfony\Component\Console\Input\InputInterface;
 class SyncCommand extends Command
 {
 
-    public function __invoke(string $from, InputInterface $input)
+    public function __invoke(string $from, InputInterface $input): int
     {
         $file = Config::findFile('concrete.json', $this->getInstallation());
 

@@ -23,7 +23,7 @@ class RestoreCommand extends Command
         RestorationManagerBuilder $restore,
         ManifestFactory $factory,
         InputInterface $input
-    ) {
+    ): int {
         $disablePhar = false;
         if (!in_array('phar', \stream_get_wrappers())) {
             $disablePhar = true;
@@ -82,6 +82,8 @@ class RestoreCommand extends Command
                 stream_wrapper_unregister('phar');
             }
         }
+
+        return 0;
     }
 
     public static function register(Container $container, Application $console): void

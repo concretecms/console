@@ -14,8 +14,9 @@ class ApplicationEnabledConnection implements ApplicationEnabledConnectionInterf
     protected $application;
 
     /**
-     * Connect to modern concrete5
-     * @param \Concrete\Core\Application\Application $application
+     * {@inheritdoc}
+     *
+     * @see \Concrete\Console\Concrete\Connection\ApplicationEnabledConnectionInterface::connect()
      */
     public function connect(Application $application): void
     {
@@ -23,9 +24,9 @@ class ApplicationEnabledConnection implements ApplicationEnabledConnectionInterf
     }
 
     /**
-     * Determine if this connection is connected
+     * {@inheritdoc}
      *
-     * @return bool
+     * @see \Concrete\Console\Concrete\Connection\ConnectionInterface::isConnected()
      */
     public function isConnected(): bool
     {
@@ -33,9 +34,9 @@ class ApplicationEnabledConnection implements ApplicationEnabledConnectionInterf
     }
 
     /**
-     * Disconnect a connection
+     * {@inheritdoc}
      *
-     * @return bool Success or failure
+     * @see \Concrete\Console\Concrete\Connection\ConnectionInterface::disconnect()
      */
     public function disconnect(): bool
     {
@@ -48,7 +49,9 @@ class ApplicationEnabledConnection implements ApplicationEnabledConnectionInterf
     }
 
     /**
-     * @return Application
+     * {@inheritdoc}
+     *
+     * @see \Concrete\Console\Concrete\Connection\ApplicationEnabledConnectionInterface::getApplication()
      */
     public function getApplication(): Application
     {

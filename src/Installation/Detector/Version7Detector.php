@@ -8,7 +8,11 @@ use Concrete\Console\Installation\Version;
 
 class Version7Detector implements DetectorInterface
 {
-
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Concrete\Console\Installation\Detector\DetectorInterface::versionAtPath()
+     */
     public function versionAtPath(string $path): ?Version
     {
         $tryFiles = [
