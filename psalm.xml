@@ -23,6 +23,7 @@
         <file name=".psalm/stubs/Concrete/Core/System/Mutex/SemaphoreMutex.phpstub" />
         <file name=".psalm/stubs/Concrete5_Model_Collection.phpstub" />
         <file name=".psalm/stubs/Loader.phpstub" />
+        <file name=".psalm/stubs/NunoMaduro/Collision/Provider.phpstub" />
         <file name=".psalm/stubs/PhpParser/Node/Expr.phpstub" />
         <file name=".psalm/stubs/PhpParser/Node/Expr/ClassConstFetch.phpstub" />
         <file name=".psalm/stubs/PhpParser/Node/Expr/MethodCall.phpstub" />
