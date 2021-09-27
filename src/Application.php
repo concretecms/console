@@ -76,17 +76,6 @@ class Application extends SillyApplication
         return parent::doRun($input, $output);
     }
 
-    protected function getDefaultInputDefinition()
-    {
-        $definition = parent::getDefaultInputDefinition();
-
-        $definition->addOptions([
-            new InputOption('--instance', '-I', InputOption::VALUE_REQUIRED, 'Specify the concrete5 directory', '.'),
-        ]);
-
-        return $definition;
-    }
-
     public function getHelp()
     {
         $artWidth = 42;

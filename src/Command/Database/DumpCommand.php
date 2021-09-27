@@ -66,10 +66,15 @@ class DumpCommand extends Command
 
     public static function register(Container $container, Application $console): void
     {
-        $console->command('database:dump [file] [-z|--gz]', self::class)
+        $console->command('database:dump [file] [-z|--gz] ' . self::getInstanceOptionSillyExpression(), self::class)
             ->descriptions('Dumps the Concrete database to a file', [
                 'file' => 'Filename for the dump file',
                 '--gz' => 'Flag to gzip',
-            ]);
+                self::getInstanceOptionName() => self::getInstanceOptionDescription(),
+            ])
+            ->defaults([
+                self::getInstanceOptionName('') => self::getInstanceOptionDefaultValue(),
+            ])
+        ;
     }
 }
