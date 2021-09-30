@@ -333,7 +333,7 @@ class BackupCommand extends Command
 
         $this->output->writeln(sprintf('Compressing directory: %s', $outputFile));
 
-        $build = new PharData($outputDirectory . '/' . $outputFile . '.tar', null, null);
+        $build = new PharData($outputDirectory . '/' . $outputFile . '.tar', 0);
         $build->buildFromDirectory($directory);
         $compressed = $build->compress(Phar::GZ);
 
