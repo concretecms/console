@@ -90,8 +90,8 @@ class BackupCommand extends Command
      */
     public static function register(Container $container, Application $console): void
     {
-        $console
-            ->command(
+        static::command(
+                $console,
                 'backup:backup [filename] [--skip-core] [--temp] [--dir=]',
                 self::class,
                 ['backup']

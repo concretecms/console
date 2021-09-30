@@ -86,8 +86,8 @@ class RestoreCommand extends Command
 
     public static function register(Container $container, Application $console): void
     {
-        $console
-            ->command(
+        self::command(
+                $console,
                 'backup:restore backupFile [-D|--dryrun] 
                         [--skip-db] [--skip-core] [--skip-packages] [--skip-config] [--skip-files] [--skip-application] 
                         [--skip-index] [--skip-database] [--reload-fpm-command=]',
