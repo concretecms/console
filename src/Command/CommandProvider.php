@@ -37,7 +37,7 @@ class CommandProvider implements CommandGroupInterface
 
     private static function pharCommands(Container $container, Application $console): void
     {
-        if (!($_SERVER['INCLUDE_SELF_UPDATE'] ?? false) && \Phar::running() === '') {
+        if (\Phar::running() === '') {
             return;
         }
         Phar\SelfUpdateCommand::register($container, $console);
