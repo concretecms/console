@@ -31,7 +31,13 @@ jobs:
         run: composer install --ansi --no-interaction --no-cache
 
       - name: Run Psalm
-        run: psalm --taint-analysis --show-info=true --output-format=github --report=results.sarif
+        env:
+          GITHUB_REF: ""
+          GITHUB_REPOSITORY: ""
+          GITHUB_EVENT_PATH: ""
+        run: |
+          rm -rf .git
+          psalm --taint-analysis --show-info=true --output-format=github --report=results.sarif
 
       - name: Upload Security Analysis results to GitHub
         uses: github/codeql-action/upload-sarif@v1
