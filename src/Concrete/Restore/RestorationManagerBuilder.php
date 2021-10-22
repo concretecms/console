@@ -11,6 +11,9 @@ class RestorationManagerBuilder implements ContainerAwareInterfaceAlias
 {
     use ContainerAwareTrait;
 
+    /**
+     * @var \Concrete\Console\Concrete\Restore\RestorationManager
+     */
     protected $manager;
 
     public function __construct(RestorationManager $manager)

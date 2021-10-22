@@ -15,7 +15,6 @@ class AdapterFactory implements ContainerAwareInterface
 
     public function forVersion(string $version): AdapterInterface
     {
-
         if (Comparator::lessThan($version, '5.6')) {
             throw VersionMismatch::expected('> 5.6.0', $version);
         }

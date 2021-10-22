@@ -11,7 +11,6 @@ namespace Concrete\Console\Installation;
  */
 class Validator
 {
-
     public const DIRNAME_CONCRETE = 'concrete';
     public const FILENAME_DISPATCHER = 'dispatcher.php';
 

@@ -11,7 +11,6 @@ use Concrete\Console\Exception\Backup\InvalidManifest;
 
 class ManifestFactory
 {
-
     public function forBackup(string $path): Manifest
     {
         if (!file_exists($path)) {

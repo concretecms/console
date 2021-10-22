@@ -26,8 +26,7 @@ class InstanceConfig
     protected $consolePath;
 
     /**
-     * @param ?callable(Ssh): Ssh $sshConfig
-     * @return Ssh
+     * @param ?callable $sshConfig
      */
     public function ssh($sshConfig = null): Ssh
     {
@@ -73,7 +72,6 @@ class InstanceConfig
     }
 
     /**
-     * @param array $instances
      * @return array<string, InstanceConfig>
      */
     public static function fromJson(array $instances): array

@@ -6,10 +6,14 @@ namespace Concrete\Console\Concrete\Connection;
 
 trait ConnectionAwareTrait
 {
-
-    /** @var ConnectionInterface */
+    /**
+     * @var ConnectionInterface
+     */
     protected $traitConnection;
 
+    /**
+     * @see \Concrete\Console\Concrete\Connection\ConnectionAwareInterface::setConnection()
+     */
     public function setConnection(ConnectionInterface $connection): void
     {
         $this->traitConnection = $connection;

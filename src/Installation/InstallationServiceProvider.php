@@ -11,7 +11,6 @@ use Symfony\Component\Console\Input\InputInterface;
 
 class InstallationServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface
 {
-
     /**
      * @var mixed[]
      */
@@ -20,6 +19,11 @@ class InstallationServiceProvider extends AbstractServiceProvider implements Boo
         InstallationDetector::class,
     ];
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \League\Container\ServiceProvider\ServiceProviderInterface::register()
+     */
     public function register()
     {
         $this->getLeagueContainer()->add(Installation::class, function (): ?Installation {
@@ -37,6 +41,11 @@ class InstallationServiceProvider extends AbstractServiceProvider implements Boo
             ->addArgument(BaseDetector::class);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \League\Container\ServiceProvider\BootableServiceProviderInterface::boot()
+     */
     public function boot()
     {
         $this->getLeagueContainer()->inflector(InstallationAwareInterface::class)

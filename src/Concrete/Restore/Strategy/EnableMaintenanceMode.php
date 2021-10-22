@@ -9,7 +9,11 @@ use Concrete\Console\Util\Config;
 
 class EnableMaintenanceMode extends AbstractOutputtingStrategy
 {
-
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Concrete\Console\Concrete\Restore\StrategyInterface::restore()
+     */
     public function restore(Restoration $job): bool
     {
         $output = $this->getOutputStyle();

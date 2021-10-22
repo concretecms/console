@@ -10,11 +10,15 @@ use League\Flysystem\Filesystem;
 
 abstract class AbstractDirectoryExtractStrategy extends AbstractOutputtingStrategy
 {
-
     abstract protected function getExtractDirectory(): string;
     abstract protected function getExtractName(): string;
     abstract protected function shouldClear(Restoration $job): bool;
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Concrete\Console\Concrete\Restore\StrategyInterface::restore()
+     */
     public function restore(Restoration $job): bool
     {
         $output = $this->getOutputStyle();

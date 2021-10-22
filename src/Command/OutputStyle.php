@@ -8,7 +8,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class OutputStyle extends SymfonyStyle
 {
-
     public function outputStep(string $step, string $suffix = '... ', string $prefix = '  - '): void
     {
         $this->newLine();

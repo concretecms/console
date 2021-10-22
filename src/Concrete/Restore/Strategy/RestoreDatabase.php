@@ -27,6 +27,11 @@ class RestoreDatabase extends AbstractOutputtingStrategy implements ConnectionAw
 {
     use ConnectionAwareTrait;
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Concrete\Console\Concrete\Restore\StrategyInterface::restore()
+     */
     public function restore(Restoration $job): bool
     {
         $output = $this->getOutputStyle();
@@ -193,8 +198,6 @@ class RestoreDatabase extends AbstractOutputtingStrategy implements ConnectionAw
     }
 
     /**
-     * @param array|null $connection
-     * @return ?PDO
      * @psalm-assert-if-true DatabaseCredentialsType $connection
      */
     private function testCredentials(?array $connection): ?PDO

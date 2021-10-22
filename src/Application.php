@@ -21,7 +21,7 @@ class Application extends SillyApplication
 {
 
     /**
-     * @var false
+     * @var bool
      */
     protected $registered = false;
 
@@ -49,6 +49,11 @@ class Application extends SillyApplication
         $this->useContainer($container, true, true);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Symfony\Component\Console\Application::doRun()
+     */
     public function doRun(InputInterface $input, OutputInterface $output)
     {
         $this->input = $input;
@@ -76,6 +81,11 @@ class Application extends SillyApplication
         return parent::doRun($input, $output);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Symfony\Component\Console\Application::getDefaultInputDefinition()
+     */
     protected function getDefaultInputDefinition()
     {
         $definition = parent::getDefaultInputDefinition();
@@ -87,6 +97,11 @@ class Application extends SillyApplication
         return $definition;
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Symfony\Component\Console\Application::getHelp()
+     */
     public function getHelp()
     {
         $artWidth = 42;
@@ -106,6 +121,7 @@ class Application extends SillyApplication
     {
         return $this->input;
     }
+
     public function getOutput(): OutputInterface
     {
         return $this->output;

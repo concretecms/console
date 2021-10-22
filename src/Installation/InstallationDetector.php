@@ -25,10 +25,6 @@ class InstallationDetector
 
     /**
      * Deals with a potential relative path.
-     *
-     * @param string $path
-     *
-     * @return null|string
      */
     protected function normalizePath(string $path): ?string
     {

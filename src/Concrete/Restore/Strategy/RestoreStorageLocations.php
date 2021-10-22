@@ -19,6 +19,11 @@ class RestoreStorageLocations extends AbstractOutputtingStrategy implements Cont
 {
     use ContainerAwareTrait;
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Concrete\Console\Concrete\Restore\StrategyInterface::restore()
+     */
     public function restore(Restoration $job): bool
     {
         $output = $this->getOutputStyle();

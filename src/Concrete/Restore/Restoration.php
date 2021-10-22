@@ -89,9 +89,6 @@ class Restoration
         return $this->backup;
     }
 
-    /**
-     * @return Installation
-     */
     public function getInstallation(): Installation
     {
         return $this->install;
@@ -134,17 +131,11 @@ class Restoration
         return $results;
     }
 
-    /**
-     * @return Manifest
-     */
     public function getManifest(): Manifest
     {
         return $this->manifest;
     }
 
-    /**
-     * @return bool
-     */
     public function isDryRun(): bool
     {
         return $this->isDryRun;

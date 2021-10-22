@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\Input;
 class DumpCommand extends Command
 {
 
-    public function __invoke(string $file, Input $input)
+    public function __invoke(string $file, Input $input): int
     {
         $app = $this->getApplication();
         $config = $app->make('config')->get('database');

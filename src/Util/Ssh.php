@@ -59,9 +59,6 @@ final class Ssh
     }
 
     /**
-     * @param string $user
-     * @param string $host
-     * @param int|null $port
      * @return static
      */
     public static function create(string $user, string $host, int $port = null): self
@@ -78,9 +75,9 @@ final class Ssh
     }
 
     /**
-     * @param int $port
-     * @return $this
      * @throws Exception If the port is negative
+     *
+     * @return $this
      */
     public function withPort(int $port): self
     {
@@ -159,7 +156,6 @@ final class Ssh
 
     /**
      * @param string|array $command
-     * @return string
      */
     public function getExecuteCommand($command): string
     {
@@ -176,8 +172,6 @@ final class Ssh
 
     /**
      * @param string|array $command
-     *
-     * @return Process
      */
     public function execute($command): Process
     {
@@ -188,8 +182,6 @@ final class Ssh
 
     /**
      * @param string|array $command
-     *
-     * @return Process
      */
     public function executeAsync($command): Process
     {
@@ -198,11 +190,6 @@ final class Ssh
         return $this->run($sshCommand, 'start');
     }
 
-    /**
-     * @param string $sourcePath
-     * @param string $destinationPath
-     * @return string
-     */
     public function getDownloadCommand(string $sourcePath, string $destinationPath): string
     {
         return "{$this->scpExecutable} {$this->getExtraScpOptions()} {$this->getTarget()}:$sourcePath $destinationPath";
@@ -238,9 +225,6 @@ final class Ssh
         return implode(' ', $extraOptions);
     }
 
-    /**
-     * @return string
-     */
     protected function getExtraScpOptions(): string
     {
         $extraOptions = $this->getExtraOptions();
@@ -255,7 +239,7 @@ final class Ssh
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     private function getExtraOptions(): array
     {
@@ -283,7 +267,6 @@ final class Ssh
 
     /**
      * @param array|string $arrayOrString
-     * @return array
      */
     protected function wrapArray($arrayOrString): array
     {

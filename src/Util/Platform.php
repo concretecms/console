@@ -19,9 +19,6 @@ class Platform
 {
     /**
      * Parses tildes and environment variables in paths.
-     *
-     * @param string $path
-     * @return string
      */
     public static function expandPath(string $path): string
     {
@@ -44,8 +41,9 @@ class Platform
     }
 
     /**
-     * @return string            The formal user home as detected from environment parameters
      * @throws RuntimeException If the user home could not reliably be determined
+     *
+     * @return string The formal user home as detected from environment parameters
      */
     public static function getUserDirectory(): string
     {
@@ -99,14 +97,13 @@ class Platform
     /**
      * @return bool Whether the host machine is running a Windows OS
      */
-    public static function isWindows()
+    public static function isWindows(): bool
     {
         return defined('PHP_WINDOWS_VERSION_BUILD');
     }
 
     /**
-     * @param string $str
-     * @return int    return a guaranteed binary length of the string, regardless of silly mbstring configs
+     * @return int return a guaranteed binary length of the string, regardless of silly mbstring configs
      */
     public static function strlen(string $str): int
     {
@@ -124,7 +121,6 @@ class Platform
 
     /**
      * @param ?resource $fd
-     * @return bool
      */
     public static function isTty($fd = null): bool
     {

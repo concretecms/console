@@ -13,6 +13,9 @@ trait ConsoleAwareTrait
      */
     protected $console;
 
+    /**
+     * @see \Concrete\Console\Command\ConsoleAwareInterface::setConsole()
+     */
     public function setConsole(Application $application): void
     {
         $this->console = $application;
