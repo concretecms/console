@@ -1,0 +1,118 @@
+From: Matthieu Napoli <matthieu@mnapoli.fr>
+Date: Sat, 1 Aug 2020 17:36:25 +0200
+Subject: [PATCH] PHP 8 compatibility
+
+--- a/src/CallableResolver.php
++++ b/src/CallableResolver.php
+@@ -62,12 +62,10 @@ private function resolveFromContainer($callable)
+             return $callable;
+         }
+ 
+-        $isStaticCallToNonStaticMethod = false;
+-
+         // If it's already a callable there is nothing to do
+         if (is_callable($callable)) {
+-            $isStaticCallToNonStaticMethod = $this->isStaticCallToNonStaticMethod($callable);
+-            if (! $isStaticCallToNonStaticMethod) {
++            // TODO with PHP 8 that should not be necessary to check this anymore
++            if (! $this->isStaticCallToNonStaticMethod($callable)) {
+                 return $callable;
+             }
+         }
+@@ -95,17 +93,8 @@ private function resolveFromContainer($callable)
+                 if ($this->container->has($callable[0])) {
+                     throw $e;
+                 }
+-                if ($isStaticCallToNonStaticMethod) {
+-                    throw new NotCallableException(sprintf(
+-                        'Cannot call %s::%s() because %s() is not a static method and "%s" is not a container entry',
+-                        $callable[0],
+-                        $callable[1],
+-                        $callable[1],
+-                        $callable[0]
+-                    ));
+-                }
+                 throw new NotCallableException(sprintf(
+-                    'Cannot call %s on %s because it is not a class nor a valid container entry',
++                    'Cannot call %s() on %s because it is not a class nor a valid container entry',
+                     $callable[1],
+                     $callable[0]
+                 ));
+--- a/src/ParameterResolver/Container/TypeHintContainerResolver.php
++++ b/src/ParameterResolver/Container/TypeHintContainerResolver.php
+@@ -5,6 +5,7 @@
+ use Invoker\ParameterResolver\ParameterResolver;
+ use Psr\Container\ContainerInterface;
+ use ReflectionFunctionAbstract;
++use ReflectionNamedType;
+ 
+ /**
+  * Inject entries from a DI container using the type-hints.
+@@ -39,10 +40,24 @@ public function getParameters(
+         }
+ 
+         foreach ($parameters as $index => $parameter) {
+-            $parameterClass = $parameter->getClass();
++            $parameterType = $parameter->getType();
++            if (!$parameterType) {
++                // No type
++                continue;
++            }
++            if ($parameterType->isBuiltin()) {
++                // Primitive types are not supported
++                continue;
++            }
++            if (!$parameterType instanceof ReflectionNamedType) {
++                // Union types are not supported
++                continue;
++            }
++
++            $parameterClass = $parameterType->getName();
+ 
+-            if ($parameterClass && $this->container->has($parameterClass->name)) {
+-                $resolvedParameters[$index] = $this->container->get($parameterClass->name);
++            if ($this->container->has($parameterClass)) {
++                $resolvedParameters[$index] = $this->container->get($parameterClass);
+             }
+         }
+ 
+--- a/src/ParameterResolver/TypeHintResolver.php
++++ b/src/ParameterResolver/TypeHintResolver.php
+@@ -2,8 +2,8 @@
+ 
+ namespace Invoker\ParameterResolver;
+ 
+-use Invoker\ParameterResolver\ParameterResolver;
+ use ReflectionFunctionAbstract;
++use ReflectionNamedType;
+ 
+ /**
+  * Inject entries using type-hints.
+@@ -27,10 +27,24 @@ class TypeHintResolver implements ParameterResolver
+         }
+ 
+         foreach ($parameters as $index => $parameter) {
+-            $parameterClass = $parameter->getClass();
++            $parameterType = $parameter->getType();
++            if (!$parameterType) {
++                // No type
++                continue;
++            }
++            if ($parameterType->isBuiltin()) {
++                // Primitive types are not supported
++                continue;
++            }
++            if (!$parameterType instanceof ReflectionNamedType) {
++                // Union types are not supported
++                continue;
++            }
++
++            $parameterClass = $parameterType->getName();
+ 
+-            if ($parameterClass && array_key_exists($parameterClass->name, $providedParameters)) {
+-                $resolvedParameters[$index] = $providedParameters[$parameterClass->name];
++            if (array_key_exists($parameterClass, $providedParameters)) {
++                $resolvedParameters[$index] = $providedParameters[$parameterClass];
+             }
+         }
+ 
