@@ -51,21 +51,21 @@ You can run commands just like this
 Which should get you something like:
 
     # Location
-    Path to installation: /path/to/my/project/public
+    Path to instance: /path/to/my/project/public
     # concrete5 Version
     Installed - Yes
     Core Version - 8.5.4
     Version Installed - 8.5.4
     Database Version - 20200609145307
     
-If you want to run a command against a different site, or if you've installed the console utility globally, any command that operates against a particular Concrete installation also has an `--installation` option (or `-i` for short.)
+If you want to run a command against a different site, or if you've installed the console utility globally, any command that operates against a particular Concrete instance also has an `--instance` option (or `-I` for short.)
 
-    concrete info --installation=/path/to/my/site
+    concrete info --instance=/path/to/my/site
     
 Returns
 
     # Location
-    Path to installation: /path/to/other/site/web
+    Path to instance: /path/to/other/site/web
     # concrete5 Version
     Installed - Yes
     Core Version - 8.5.0
