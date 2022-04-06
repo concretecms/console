@@ -40,13 +40,14 @@ The concrete console cli tool can also be installed globally with composer
     
 If you haven't already, make sure to add the global composer bin directory to your PATH.
 
-First find your global composer directory location
-    
-    composer config home --global
-    
-Then add the output tou your PATH
+    export PATH="$(composer global config bin-dir --absolute --quiet):$PATH"
 
-    export PATH={your_global_composer_directory}/vendor/bin:$PATH
+Note: This command will update the `PATH` environment variable only for the current session. In order to make it persistent you can add the line
+
+    export PATH="$(composer global config bin-dir --absolute --quiet):$PATH"
+    
+To the `$HOME/.profile` file (for the current user only), or to `/etc/profile` (for any user)
+
 
 ## Running Commands
 
