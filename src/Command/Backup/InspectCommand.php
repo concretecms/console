@@ -85,12 +85,17 @@ class InspectCommand extends Command
 
     public static function register(Container $container, Application $console): void
     {
-        $console->command('backup:inspect backupfile [-r|--manifest-only] [--ls=]', self::class)
+        $console->command('backup:inspect backupfile [-r|--manifest-only] [--ls=] ' . self::getInstanceOptionSillyExpression(), self::class)
             ->descriptions('Inspects a Concrete installation backup', [
                 'backupfile' => 'The path to the backup file to inspect',
                 '--manifest-only' => 'Output the raw manifest json, combine with <info>jq</> command.',
-                '--ls' => 'List out files at a given path'
-            ]);
+                '--ls' => 'List out files at a given path',
+                self::getInstanceOptionName() => self::getInstanceOptionDescription(),
+            ])
+            ->defaults([
+                self::getInstanceOptionName('') => self::getInstanceOptionDefaultValue(),
+            ])
+        ;
     }
 
     protected function fileCount(string $backupFile, int $storageLocationId): int

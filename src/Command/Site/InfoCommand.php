@@ -31,7 +31,16 @@ class InfoCommand extends Command
      */
     public static function register(Container $container, Application $console): void
     {
-        $console->command('site:info', self::class, ['info'])
-            ->descriptions('Get info about the current Concrete installation');
+        $console->command('site:info ' . self::getInstanceOptionSillyExpression(), self::class, ['info'])
+            ->descriptions(
+                'Get info about the current Concrete installation',
+                [
+                    self::getInstanceOptionName() => self::getInstanceOptionDescription(),
+                ]
+            )
+            ->defaults([
+                self::getInstanceOptionName('') => self::getInstanceOptionDefaultValue(),
+            ])
+        ;
     }
 }

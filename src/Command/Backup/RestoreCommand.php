@@ -90,7 +90,7 @@ class RestoreCommand extends Command
             ->command(
                 'backup:restore backupFile [-D|--dryrun] 
                         [--skip-db] [--skip-core] [--skip-packages] [--skip-config] [--skip-files] [--skip-application] 
-                        [--skip-index] [--skip-database] [--reload-fpm-command=]',
+                        [--skip-index] [--skip-database] [--reload-fpm-command=] ' . self::getInstanceOptionSillyExpression(),
                 self::class,
                 ['restore']
             )
@@ -107,7 +107,12 @@ class RestoreCommand extends Command
                     '--skip-index' => 'Skip the index.php file',
                     '--skip-database' => 'Skip restoring the database',
                     '--reload-fpm-command' => 'Command to run to reload FPM if needed',
+                    self::getInstanceOptionName() => self::getInstanceOptionDescription(),
                 ]
-            );
+            )
+            ->defaults([
+                self::getInstanceOptionName('') => self::getInstanceOptionDefaultValue(),
+            ])
+        ;
     }
 }

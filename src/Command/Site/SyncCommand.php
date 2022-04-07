@@ -55,13 +55,18 @@ class SyncCommand extends Command
 
     public static function register(Container $container, Application $console): void
     {
-        $console->command('site:sync from [--config=]', self::class)
+        $console->command('site:sync from [--config=] ' . self::getInstanceOptionSillyExpression(), self::class)
             ->descriptions(
                 'Sync a remote site into this site using backups.',
                 [
                     'from' => 'The location to sync from @remote:/path/to/backup.tar.gz or @remote',
                     '--config' => 'Specify the config file to use',
+                    self::getInstanceOptionName() => self::getInstanceOptionDescription(),
                 ]
-            );
+            )
+            ->defaults([
+                self::getInstanceOptionName('') => self::getInstanceOptionDefaultValue(),
+            ])
+        ;
     }
 }

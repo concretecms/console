@@ -19,4 +19,24 @@ trait InstallationAwareTrait
     {
         return $this->traitInstallation;
     }
+
+    protected static function getInstanceOptionSillyExpression(): string
+    {
+        return '[-I|' . static::getInstanceOptionName() . '=]';
+    }
+
+    protected static function getInstanceOptionName(string $prefix = '--'): string
+    {
+        return "{$prefix}instance";
+    }
+
+    protected static function getInstanceOptionDescription(): string
+    {
+        return 'Specify the concrete directory';
+    }
+
+    protected static function getInstanceOptionDefaultValue(): string
+    {
+        return '.';
+    }
 }
