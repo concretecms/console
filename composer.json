@@ -1,5 +1,5 @@
 {
-  "name": "concrete5/console",
+  "name": "concretecms/console",
   "license": "MIT",
   "description": "Concrete console utility.",
   "minimum-stability": "dev",
