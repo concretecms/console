@@ -19,7 +19,7 @@ https://github.com/concrete5/console/releases/latest/download/concrete.phar
 You simply have to download it and make it executable:
 
 ```sh
-curl -L -o /usr/local/bin/concrete https://github.com/concrete5/console/releases/latest/download/concrete.phar
+curl -L -o /usr/local/bin/concrete https://github.com/concretecms/console/releases/latest/download/concrete.phar
 chmod +x /usr/local/bin/concrete
 ```
 
@@ -36,7 +36,7 @@ and create a `concrete.bat` file in the same directory with the following conten
 
 The concrete console cli tool can also be installed globally with composer
 
-    composer global require concrete5/console
+    composer global require concretecms/console
     
 If you haven't already, make sure to add the global composer bin directory to your PATH.
 
