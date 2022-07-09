@@ -85,7 +85,7 @@ class InspectCommand extends Command
 
     public static function register(Container $container, Application $console): void
     {
-        $console->command('backup:inspect backupfile [-r|--manifest-only] [--ls=]', self::class)
+        self::command($console, 'backup:inspect backupfile [-r|--manifest-only] [--ls=]', self::class)
             ->descriptions('Inspects a Concrete installation backup', [
                 'backupfile' => 'The path to the backup file to inspect',
                 '--manifest-only' => 'Output the raw manifest json, combine with <info>jq</> command.',

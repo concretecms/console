@@ -55,7 +55,7 @@ class SyncCommand extends Command
 
     public static function register(Container $container, Application $console): void
     {
-        $console->command('site:sync from [--config=]', self::class)
+        self::command($console, 'site:sync from [--config=]', self::class)
             ->descriptions(
                 'Sync a remote site into this site using backups.',
                 [
