@@ -37,7 +37,7 @@ class BackupCommand extends Command
         // Make a new directory to back up in
         $backupDirectory = Platform::tempDirectory(true);
         /** @var string $directory */
-        $directory = $input->getOption('dir');
+        $directory = rtrim($input->getOption('dir'), '/');
 
         if (!file_exists($directory)) {
             mkdir($directory, 0777, true);
@@ -333,15 +333,36 @@ class BackupCommand extends Command
 
         $this->output->writeln(sprintf('Compressing directory: %s', $outputFile));
 
-        $build = new PharData($outputDirectory . '/' . $outputFile . '.tar', 0);
-        $build->buildFromDirectory($directory);
-        $compressed = $build->compress(Phar::GZ);
+        if (Phar::running() !== '') {
+            $build = new PharData($outputDirectory . '/' . $outputFile . '.tar', 0);
+            $build->buildFromDirectory($directory);
+            $compressed = $build->compress(Phar::GZ);
 
-        // Get rid of the uncompressed version
-        unlink($build->getPath());
+            // Get rid of the uncompressed version
+            unlink($build->getPath());
+
+            $compressedFile = $compressed->getPath();
+        } else {
+            $tarProcess = new Process(
+                [
+                    'tar',
+                    '-zcf',
+                    $outputDirectory . '/' . $outputFile . '.tar.gz',
+                    $directory
+                ]
+            );
+            $tarProcess->setTimeout(null);
+            $tarProcess->run();
+
+            if (!$tarProcess->isSuccessful()) {
+                throw new \Exception($tarProcess->getErrorOutput());
+            }
+
+            $compressedFile = $outputDirectory . '/' . $outputFile . '.tar.gz';
+        }
 
         $this->output->writeln(['<fg=green>', 'Successfully created backup file at:<fg=cyan>']);
-        $this->output->writeln($compressed->getPath(), OutputInterface::VERBOSITY_QUIET);
+        $this->output->writeln($compressedFile, OutputInterface::VERBOSITY_QUIET);
         $this->output->writeln('</>');
 
         if ($disablePhar && in_array('phar', stream_get_wrappers(), true)) {
