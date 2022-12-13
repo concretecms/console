@@ -7,8 +7,9 @@ namespace Concrete\Console\Concrete\Connection;
 class LegacyConnection implements ConnectionInterface
 {
     /**
-     * Test if this connection is connected
-     * @return bool
+     * {@inheritdoc}
+     *
+     * @see \Concrete\Console\Concrete\Connection\ConnectionInterface::isConnected()
      */
     public function isConnected(): bool
     {
@@ -16,8 +17,9 @@ class LegacyConnection implements ConnectionInterface
     }
 
     /**
-     * Disconnect this connection
-     * @return bool
+     * {@inheritdoc}
+     *
+     * @see \Concrete\Console\Concrete\Connection\ConnectionInterface::disconnect()
      */
     public function disconnect(): bool
     {

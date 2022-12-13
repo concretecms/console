@@ -13,7 +13,6 @@ use League\Container\ServiceProvider\BootableServiceProviderInterface;
 
 class ConcreteServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface
 {
-
     /**
      * @var mixed[]
      */
@@ -22,6 +21,11 @@ class ConcreteServiceProvider extends AbstractServiceProvider implements Bootabl
         ConnectionInterface::class,
     ];
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \League\Container\ServiceProvider\ServiceProviderInterface::register()
+     */
     public function register()
     {
         $app = $this->getLeagueContainer();
@@ -42,6 +46,11 @@ class ConcreteServiceProvider extends AbstractServiceProvider implements Bootabl
         }, true);
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \League\Container\ServiceProvider\BootableServiceProviderInterface::boot()
+     */
     public function boot()
     {
         $app = $this->getLeagueContainer();

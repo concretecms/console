@@ -10,7 +10,11 @@ use League\Flysystem\Filesystem;
 
 class Finalize extends AbstractOutputtingStrategy
 {
-
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Concrete\Console\Concrete\Restore\StrategyInterface::restore()
+     */
     public function restore(Restoration $job): bool
     {
         $cliPath = $job->findConcretePath('concrete/bin/concrete5');

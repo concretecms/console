@@ -23,6 +23,11 @@ class BaseDetector implements DetectorInterface, ContainerAwareInterface
         Version7Detector::class,
     ];
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Concrete\Console\Installation\Detector\DetectorInterface::versionAtPath()
+     */
     public function versionAtPath(string $path): ?Version
     {
         $detectors = $this->inflatedDetectors();
