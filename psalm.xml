@@ -5,7 +5,7 @@
     phpVersion="7.1"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
-    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    xsi:schemaLocation="https://getpsalm.org/schema/config https://psalm.dev/schema/config"
 >
     <stubs>
         <file name=".psalm/stubs/Composer/Semver/Comparator.phpstub" />
@@ -23,6 +23,7 @@
         <file name=".psalm/stubs/Concrete/Core/System/Mutex/SemaphoreMutex.phpstub" />
         <file name=".psalm/stubs/Concrete5_Model_Collection.phpstub" />
         <file name=".psalm/stubs/Loader.phpstub" />
+        <file name=".psalm/stubs/NunoMaduro/Collision/Provider.phpstub" />
         <file name=".psalm/stubs/PhpParser/Node/Expr.phpstub" />
         <file name=".psalm/stubs/PhpParser/Node/Expr/ClassConstFetch.phpstub" />
         <file name=".psalm/stubs/PhpParser/Node/Expr/MethodCall.phpstub" />

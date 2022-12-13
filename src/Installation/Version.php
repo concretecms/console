@@ -12,7 +12,6 @@ use InvalidArgumentException;
  */
 class Version
 {
-
     public const VERSION_5 = '5.5';
     public const VERSION_6 = '5.6';
     public const VERSION_7 = '5.7';
@@ -44,12 +43,6 @@ class Version
     /**
      * Normalize a given version into something that works well with the comparator.
      *
-     * @param string $version
-     * @param int $segments
-     * @param bool $validate
-     * @param bool $keepNoun
-     * @return string
-     *
      * @psalm-pure
      */
     public static function normalizeVersionString(
@@ -80,7 +73,6 @@ class Version
     }
 
     /**
-     * @return string
      * @psalm-return '5.5'|'5.6'|'5.7'|'8'|'9'|'10'
      */
     public function getMajorVersion(): string
@@ -98,10 +90,6 @@ class Version
 
     /**
      * Evaluates the expression: $version1 > $version2.
-     *
-     * @param string $version
-     *
-     * @return bool
      */
     public function greaterThan(string $version): bool
     {
@@ -110,10 +98,6 @@ class Version
 
     /**
      * Evaluates the expression: $version1 >= $version2.
-     *
-     * @param string $version
-     *
-     * @return bool
      */
     public function greaterThanOrEqualTo(string $version): bool
     {
@@ -122,10 +106,6 @@ class Version
 
     /**
      * Evaluates the expression: $version1 < $version2.
-     *
-     * @param string $version
-     *
-     * @return bool
      */
     public function lessThan(string $version): bool
     {
@@ -135,10 +115,6 @@ class Version
 
     /**
      * Evaluates the expression: $version1 <= $version2.
-     *t
-     * @param string $version
-     *
-     * @return bool
      */
     public function lessThanOrEqualTo(string $version): bool
     {
@@ -147,10 +123,6 @@ class Version
 
     /**
      * Evaluates the expression: $version1 == $version2.
-     *
-     * @param string $version
-     *
-     * @return bool
      */
     public function equalTo(string $version): bool
     {
@@ -159,10 +131,6 @@ class Version
 
     /**
      * Evaluates the expression: $version1 != $version2.
-     *
-     * @param string $version
-     *
-     * @return bool
      */
     public function notEqualTo(string $version): bool
     {

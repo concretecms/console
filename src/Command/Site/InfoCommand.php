@@ -12,7 +12,7 @@ use League\Container\Container;
 class InfoCommand extends Command
 {
 
-    public function __invoke()
+    public function __invoke(): int
     {
         $app = $this->getApplication();
 
@@ -22,13 +22,10 @@ class InfoCommand extends Command
         $this->output->writeln('<info># concrete5 Version</info>');
         $this->output->writeln('Installed - ' . ($info->isInstalled() ? 'Yes' : 'No'));
         $this->output->writeln($info->getCoreVersions());
+
+        return 0;
     }
 
-    /**
-     * @param Container $container
-     * @param Application $console
-     * @return void
-     */
     public static function register(Container $container, Application $console): void
     {
         $console->command('site:info ' . self::getInstanceOptionSillyExpression(), self::class, ['info'])

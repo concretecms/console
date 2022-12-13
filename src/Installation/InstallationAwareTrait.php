@@ -6,10 +6,12 @@ namespace Concrete\Console\Installation;
 
 trait InstallationAwareTrait
 {
-
     /** @var Installation */
     protected $traitInstallation;
 
+    /**
+     * @see \Concrete\Console\Installation\InstallationAwareInterface::setInstallation()
+     */
     public function setInstallation(Installation $connection): void
     {
         $this->traitInstallation = $connection;

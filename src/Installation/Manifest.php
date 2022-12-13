@@ -86,8 +86,6 @@ class Manifest implements \JsonSerializable
     }
 
     /**
-     * @param string $handle
-     * @return array
      * @psalm-return ?PackageType
      */
     public function getPackage(string $handle): ?array
@@ -137,8 +135,12 @@ class Manifest implements \JsonSerializable
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @return array
      * @psalm-return ManifestType
+     *
+     * @see \JsonSerializable::jsonSerialize()
      */
     public function jsonSerialize()
     {
@@ -234,74 +236,46 @@ class Manifest implements \JsonSerializable
         return $this->applicationContents;
     }
 
-    /**
-     * @return string|null
-     */
     public function getDatabase(): ?string
     {
         return $this->database;
     }
 
-    /**
-     * @return string
-     */
     public function getVersion(): string
     {
         return $this->version;
     }
 
-    /**
-     * @return string|null
-     */
     public function getPath(): ?string
     {
         return $this->installationPath;
     }
 
-    /**
-     * @return string|null
-     */
     public function getUrl(): ?string
     {
         return $this->url;
     }
 
-    /**
-     * @return string|null
-     */
     public function getHostName(): ?string
     {
         return $this->hostName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getSiteName(): ?string
     {
         return $this->siteName;
     }
 
-    /**
-     * @return bool
-     */
     public function includesCore(): bool
     {
         return $this->includeCore;
     }
 
-    /**
-     * @return bool
-     */
     public function includesIndex(): bool
     {
         return $this->includeIndex;
     }
 
-    /**
-     * @param string|null $database
-     * @return Manifest
-     */
     public function setDatabase(?string $database): Manifest
     {
         $self = clone $this;
@@ -309,10 +283,6 @@ class Manifest implements \JsonSerializable
         return $self;
     }
 
-    /**
-     * @param string $version
-     * @return Manifest
-     */
     public function setVersion(string $version): Manifest
     {
         $self = clone $this;
@@ -320,10 +290,6 @@ class Manifest implements \JsonSerializable
         return $self;
     }
 
-    /**
-     * @param string|null $installationPath
-     * @return Manifest
-     */
     public function setInstallationPath(?string $installationPath): Manifest
     {
         $self = clone $this;
@@ -331,10 +297,6 @@ class Manifest implements \JsonSerializable
         return $self;
     }
 
-    /**
-     * @param string|null $url
-     * @return Manifest
-     */
     public function setUrl(?string $url): Manifest
     {
         $self = clone $this;
@@ -342,10 +304,6 @@ class Manifest implements \JsonSerializable
         return $self;
     }
 
-    /**
-     * @param string|null $hostName
-     * @return Manifest
-     */
     public function setHostName(?string $hostName): Manifest
     {
         $self = clone $this;
@@ -353,10 +311,6 @@ class Manifest implements \JsonSerializable
         return $self;
     }
 
-    /**
-     * @param string|null $siteName
-     * @return Manifest
-     */
     public function setSiteName(?string $siteName): Manifest
     {
         $self = clone $this;
@@ -364,10 +318,6 @@ class Manifest implements \JsonSerializable
         return $self;
     }
 
-    /**
-     * @param bool $includeCore
-     * @return Manifest
-     */
     public function setIncludeCore(bool $includeCore): Manifest
     {
         $self = clone $this;
@@ -375,10 +325,6 @@ class Manifest implements \JsonSerializable
         return $self;
     }
 
-    /**
-     * @param bool $includeIndex
-     * @return Manifest
-     */
     public function setIncludeIndex(bool $includeIndex): Manifest
     {
         $self = clone $this;
@@ -386,9 +332,6 @@ class Manifest implements \JsonSerializable
         return $self;
     }
 
-    /**
-     * @param \DateTimeInterface|null $created
-     */
     public function setDateCreated(?\DateTimeInterface $created): Manifest
     {
         if ($created instanceof \DateTime) {
@@ -403,9 +346,6 @@ class Manifest implements \JsonSerializable
         return $self;
     }
 
-    /**
-     * @return \DateTimeImmutable|null
-     */
     public function getDateCreated(): ?\DateTimeImmutable
     {
         return $this->created;

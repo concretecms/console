@@ -8,14 +8,16 @@ use Concrete\Console\Concrete\Connection\ApplicationEnabledConnectionInterface;
 use Concrete\Console\Concrete\Connection\ConnectionInterface;
 use Concrete\Console\Util\Installation;
 use Concrete\Core\Application\Application;
+use Phar;
 
 abstract class AbstractApplicationEnabledAdapter implements AdapterInterface
 {
-
     /**
-     * Attach to a modern concrete5 site
-     * @param string $path
-     * @return ApplicationEnabledConnectionInterface $connection
+     * Attach to a modern concrete5 site.
+     *
+     * {@inheritdoc}
+     *
+     * @see \Concrete\Console\Concrete\Adapter\AdapterInterface::attach()
      */
     public function attach(string $path): ConnectionInterface
     {
@@ -27,17 +29,13 @@ abstract class AbstractApplicationEnabledAdapter implements AdapterInterface
 
     /**
      * Get the connection to connect with
-     *
-     * @return ApplicationEnabledConnectionInterface
      */
     abstract protected function createConnection(): ApplicationEnabledConnectionInterface;
 
     /**
      * Resolve the application object from a concrete5 site
-     * @param string $path
-     * @return Application
      */
-    private function resolveApplication($path): Application
+    private function resolveApplication(string $path): Application
     {
         chdir($path);
 
@@ -56,10 +54,6 @@ abstract class AbstractApplicationEnabledAdapter implements AdapterInterface
         return $cms;
     }
 
-    /**
-     * @param string $path
-     * @param string $core
-     */
     protected function defineConstants(string $path, string $core): void
     {
         // Define some required constants
@@ -70,29 +64,23 @@ abstract class AbstractApplicationEnabledAdapter implements AdapterInterface
         require $core . '/bootstrap/configure.php';
     }
 
-    /**
-     * @param string $path
-     * @param string $core
-     */
     protected function registerAutoload(string $path, string $core): void
     {
         // Load in concrete5's autoloader
         require $core . '/bootstrap/autoload.php';
     }
 
-    /**
-     * @param string $path
-     * @param string $core
-     * @return Application
-     */
     protected function getApplicationInstance(string $path, string $core): Application
     {
-        return require $core . '/bootstrap/start.php';
+        try {
+            return require $core . '/bootstrap/start.php';
+        } finally {
+            if (Phar::running() !== '' && !in_array('phar', stream_get_wrappers(), true)) {
+                stream_wrapper_restore('phar');
+            }
+        }
     }
 
-    /**
-     * @param Application $cms
-     */
     protected function bootApplication(Application $cms): void
     {
         if (method_exists($cms, 'getRuntime')) {

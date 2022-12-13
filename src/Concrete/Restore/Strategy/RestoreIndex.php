@@ -15,7 +15,11 @@ use League\Flysystem\Plugin\ListPaths;
  */
 class RestoreIndex extends AbstractOutputtingStrategy
 {
-
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Concrete\Console\Concrete\Restore\StrategyInterface::restore()
+     */
     public function restore(Restoration $job): bool
     {
         $output = $this->getOutputStyle();

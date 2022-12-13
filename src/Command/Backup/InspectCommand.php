@@ -14,7 +14,6 @@ use Symfony\Component\Console\Input\InputInterface;
 
 class InspectCommand extends Command
 {
-
     public function __invoke(string $backupFile, InputInterface $input, ManifestFactory $factory): int
     {
         if (!file_exists($backupFile)) {

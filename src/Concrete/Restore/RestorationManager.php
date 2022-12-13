@@ -9,7 +9,6 @@ use Concrete\Console\Command\OutputStyleAwareInterface;
 
 class RestorationManager implements StrategyInterface, OutputStyleAwareInterface
 {
-
     public const RESULT_SUCCESS = 1;
     public const RESULT_FAILURE = 2;
     public const RESULT_SKIPPED = 3;
@@ -58,6 +57,11 @@ class RestorationManager implements StrategyInterface, OutputStyleAwareInterface
         return $failed === 0;
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Concrete\Console\Concrete\Restore\StrategyInterface::restore()
+     */
     public function restore(Restoration $job): bool
     {
         $generator = $this->restoreGenerator($job);
@@ -67,6 +71,11 @@ class RestorationManager implements StrategyInterface, OutputStyleAwareInterface
         return $generator->getReturn();
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Concrete\Console\Command\OutputStyleAwareInterface::setOutputStyle()
+     */
     public function setOutputStyle(OutputStyle $outputStyle): void
     {
         $this->outputStyle = $outputStyle;

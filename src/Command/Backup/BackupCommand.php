@@ -30,9 +30,9 @@ class BackupCommand extends Command
      */
     protected $skipCore;
 
-    public function __invoke(?string $filename, InputInterface $input)
+    public function __invoke(?string $filename, InputInterface $input): int
     {
-        $this->skipCore = (bool)$input->getOption('skip-core');
+        $this->skipCore = (bool) $input->getOption('skip-core');
 
         // Make a new directory to back up in
         $backupDirectory = Platform::tempDirectory(true);
@@ -85,9 +85,6 @@ class BackupCommand extends Command
         return 0;
     }
 
-    /**
-     * @return void
-     */
     public static function register(Container $container, Application $console): void
     {
         $console
@@ -334,7 +331,7 @@ class BackupCommand extends Command
 
         $this->output->writeln(sprintf('Compressing directory: %s', $outputFile));
 
-        $build = new PharData($outputDirectory . '/' . $outputFile . '.tar', null, null);
+        $build = new PharData($outputDirectory . '/' . $outputFile . '.tar', 0);
         $build->buildFromDirectory($directory);
         $compressed = $build->compress(Phar::GZ);
 

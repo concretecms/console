@@ -11,7 +11,11 @@ use RuntimeException;
 
 class Version6Adapter implements AdapterInterface
 {
-
+    /**
+     * {@inheritdoc}
+     *
+     * @see \Concrete\Console\Concrete\Adapter\AdapterInterface::attach()
+     */
     public function attach(string $path): ConnectionInterface
     {
         // Check if headers are sent

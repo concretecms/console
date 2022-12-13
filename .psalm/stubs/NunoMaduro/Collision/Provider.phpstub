@@ -1,0 +1,10 @@
+<?php
+
+namespace NunoMaduro\Collision;
+
+/**
+ * @method register(): void
+ */
+class Provider
+{
+}

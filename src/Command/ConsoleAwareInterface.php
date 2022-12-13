@@ -8,6 +8,5 @@ use Concrete\Console\Application;
 
 interface ConsoleAwareInterface
 {
-
     public function setConsole(Application $application): void;
 }

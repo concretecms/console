@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # Check the changes in these files/directories to build automatically the release notes
-      PATHS_FOR_RELEASE_NOTES: "box.json.dist composer.json bin/ src/"
+      PATHS_FOR_RELEASE_NOTES: "box.json.dist composer.json helpers.php bin/ src/"
       # Its value will be set by the action (if release-like tag is created)
       VERSION: ""
       # Its value will be set by the action (if release-like tag is created)

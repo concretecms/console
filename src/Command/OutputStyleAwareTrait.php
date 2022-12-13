@@ -14,6 +14,9 @@ trait OutputStyleAwareTrait
      */
     protected $output;
 
+    /**
+     * @see \Concrete\Console\Command\OutputStyleAwareInterface::setOutputStyle()
+     */
     public function setOutputStyle(OutputStyle $outputStyle): void
     {
         $this->output = $outputStyle;

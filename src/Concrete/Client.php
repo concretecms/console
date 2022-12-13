@@ -20,11 +20,9 @@ class Client implements ClientInterface
     }
 
     /**
-     * Attempt to disconnect
-     * (This isn't going to be fully supported for awhile)
+     * {@inheritDoc}
      *
-     * @param ConnectionInterface $connection
-     * @return bool
+     * @see \Concrete\Console\Concrete\ClientInterface::disconnect()
      */
     public function disconnect(ConnectionInterface $connection): bool
     {
@@ -32,9 +30,9 @@ class Client implements ClientInterface
     }
 
     /**
-     * Get a connection to a concrete5 site
-     * @param string $path The path to the site to connect to
-     * @return ConnectionInterface
+     * {@inheritdoc}
+     *
+     * @see \Concrete\Console\Concrete\ClientInterface::connect()
      */
     public function connect($path): ConnectionInterface
     {

@@ -19,7 +19,7 @@ https://github.com/concrete5/console/releases/latest/download/concrete.phar
 You simply have to download it and make it executable:
 
 ```sh
-curl -L -o /usr/local/bin/concrete https://github.com/concrete5/console/releases/latest/download/concrete.phar
+curl -L -o /usr/local/bin/concrete https://github.com/concretecms/console/releases/latest/download/concrete.phar
 chmod +x /usr/local/bin/concrete
 ```
 
@@ -36,11 +36,18 @@ and create a `concrete.bat` file in the same directory with the following conten
 
 The concrete console cli tool can also be installed globally with composer
 
-    composer global require concrete5/console
+    composer global require concretecms/console
     
 If you haven't already, make sure to add the global composer bin directory to your PATH.
 
-    export PATH=~/.composer/vendor/bin:$PATH
+    export PATH="$(composer global config bin-dir --absolute --quiet):$PATH"
+
+Note: This command will update the `PATH` environment variable only for the current session. In order to make it persistent you can add the line
+
+    export PATH="$(composer global config bin-dir --absolute --quiet):$PATH"
+    
+To the `$HOME/.profile` file (for the current user only), or to `/etc/profile` (for any user)
+
 
 ## Running Commands
 
@@ -51,21 +58,21 @@ You can run commands just like this
 Which should get you something like:
 
     # Location
-    Path to installation: /path/to/my/project/public
+    Path to instance: /path/to/my/project/public
     # concrete5 Version
     Installed - Yes
     Core Version - 8.5.4
     Version Installed - 8.5.4
     Database Version - 20200609145307
     
-If you want to run a command against a different site, or if you've installed the console utility globally, any command that operates against a particular Concrete installation also has an `--installation` option (or `-i` for short.)
+If you want to run a command against a different site, or if you've installed the console utility globally, any command that operates against a particular Concrete instance also has an `--instance` option (or `-I` for short.)
 
-    concrete info --installation=/path/to/my/site
+    concrete info --instance=/path/to/my/site
     
 Returns
 
     # Location
-    Path to installation: /path/to/other/site/web
+    Path to instance: /path/to/other/site/web
     # concrete5 Version
     Installed - Yes
     Core Version - 8.5.0
