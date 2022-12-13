@@ -84,22 +84,6 @@ class Application extends SillyApplication
     /**
      * {@inheritdoc}
      *
-     * @see \Symfony\Component\Console\Application::getDefaultInputDefinition()
-     */
-    protected function getDefaultInputDefinition()
-    {
-        $definition = parent::getDefaultInputDefinition();
-
-        $definition->addOptions([
-            new InputOption('--instance', '-I', InputOption::VALUE_REQUIRED, 'Specify the concrete5 directory', '.'),
-        ]);
-
-        return $definition;
-    }
-
-    /**
-     * {@inheritdoc}
-     *
      * @see \Symfony\Component\Console\Application::getHelp()
      */
     public function getHelp()

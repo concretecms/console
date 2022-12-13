@@ -89,7 +89,7 @@ class BackupCommand extends Command
     {
         $console
             ->command(
-                'backup:backup [filename] [--skip-core] [--temp] [--dir=]',
+                'backup:backup [filename] [--skip-core] [--temp] [--dir=] ' . self::getInstanceOptionSillyExpression(),
                 self::class,
                 ['backup']
             )
@@ -99,13 +99,14 @@ class BackupCommand extends Command
                     'filename' => 'Filename to use',
                     '--skip-core' => 'Does not include the Concrete core in the archive.',
                     '--temp' => 'Store relative to the concrete temp folder',
-                    '--dir' => 'The directory to store the backup in'
+                    '--dir' => 'The directory to store the backup in',
+                    self::getInstanceOptionName() => self::getInstanceOptionDescription(),
                 ]
-            )->defaults(
-                [
-                    'dir' => Platform::configDirectory() . '/backups'
-                ]
-            );
+            )->defaults([
+                'dir' => Platform::configDirectory() . '/backups',
+                self::getInstanceOptionName('') => self::getInstanceOptionDefaultValue(),
+            ])
+        ;
     }
 
     protected function exportDatabase(Manifest $manifest, string $directory): Manifest
