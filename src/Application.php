@@ -86,7 +86,7 @@ class Application extends SillyApplication
      *
      * @see \Symfony\Component\Console\Application::getHelp()
      */
-    public function getHelp()
+    public function getHelp(): string
     {
         $artWidth = 42;
 
