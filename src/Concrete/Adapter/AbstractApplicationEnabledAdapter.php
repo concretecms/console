@@ -44,13 +44,8 @@ abstract class AbstractApplicationEnabledAdapter implements AdapterInterface
         // Setup
         $this->defineConstants($path, $core);
         $this->registerAutoload($path, $core);
-
-        // Get the concrete5 application
-        $cms = $this->getApplicationInstance($path, $core);
-
-        // Boot the runtime
-        $this->bootApplication($cms);
-
+        $cms = $this->bootApplicationInstance($path, $core);
+        
         return $cms;
     }
 
@@ -70,7 +65,7 @@ abstract class AbstractApplicationEnabledAdapter implements AdapterInterface
         require $core . '/bootstrap/autoload.php';
     }
 
-    protected function getApplicationInstance(string $path, string $core): Application
+    protected function bootApplicationInstance(string $path, string $core): Application
     {
         try {
             return require $core . '/bootstrap/start.php';
@@ -81,11 +76,4 @@ abstract class AbstractApplicationEnabledAdapter implements AdapterInterface
         }
     }
 
-    protected function bootApplication(Application $cms): void
-    {
-        if (method_exists($cms, 'getRuntime')) {
-            $runtime = $cms->getRuntime();
-            $runtime->boot();
-        }
-    }
 }

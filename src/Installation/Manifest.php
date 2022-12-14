@@ -142,6 +142,7 @@ class Manifest implements \JsonSerializable
      *
      * @see \JsonSerializable::jsonSerialize()
      */
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return [
